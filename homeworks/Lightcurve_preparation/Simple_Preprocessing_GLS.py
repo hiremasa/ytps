@@ -51,7 +51,14 @@ def plot_4figures(lc, lc_clean, gls, preds):
 
     ax = axes[2]
     ax.plot(1/gls.freq, gls.power)
-    ax.scatter(preds["P"], gls.pmax, color="r", s=40, label="$P_{max}=$"+f"{gls.pmax:.2f} [d]")
+    #ax.scatter(preds["P"], gls.pmax, color="r", s=40, label="$P_{max}=$"+f"{gls.pmax:.2f}")
+    for m in range(1, int(max(1/gls.freq)//preds["P"]) + 1):
+        if m == 1:
+            ax.axvline(x=preds["P"], color="red", label ="$P_{rot}=$"+f"{preds['P']:.2f}", )
+        else:
+            ax.axvline(x=preds["P"]*m , linestyle=":", color="black")
+            ax.axvline(x=preds["P"]/m , linestyle=":", color="black")
+    
     ax.legend()
 
     ax.set_title("Peridogram", fontsize=20)
@@ -59,10 +66,10 @@ def plot_4figures(lc, lc_clean, gls, preds):
     ax.set_ylabel("Power", fontsize=12)
 
     ax = axes[3]
-    phase = (lc_clean.time.value / preds["P"])%1
-    y = preds["offset"] + preds["amp"] * np.sin(2*np.pi*(preds["T0"]+lc_clean.time.value)/preds["P"])
-    ax.scatter(phase*gls.pmax, lc_clean.flux.value, s=10)
-    ax.scatter(phase*gls.pmax, y, color='r', s=10)
+    phase = ((lc_clean.time.value - preds["T0"]) / preds["P"])%1 
+    y = preds["offset"] + preds["amp"] * np.sin(2*np.pi*phase + preds["ph"])
+    ax.scatter(phase*preds["P"], lc_clean.flux.value, s=10)
+    ax.scatter(phase*preds["P"], y, color='r', s=10)
     ax.set_title("Folded Light Curve", fontsize=20)
     ax.set_xlabel("Phase [day]", fontsize=12)
     ax.set_ylabel("Normalized Flux", fontsize=12)
