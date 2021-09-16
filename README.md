@@ -6,17 +6,19 @@
 ---
 <a name="directory"></a>
 ## Directory description of this repository
-.<br>
-├── homeworks<br>
-├── output (all outputs are stored here)<br>
-│   ├── all_df.csv<br>
-│   ├── dataframes<br>
-│   └── images<br>
-├── requirements.txt<br>
-└── src (main working dir)<br>
-    ├── Simple_Preprocessing_GLS.py (for make 4 lc plots && make dataframes)<br>
-    └── batch_script.txt<br>
 
+<pre>
+.
+├── homeworks
+├── output (all outputs are stored here)
+│   ├── all_df.csv
+│   ├── dataframes
+│   └── images
+├── requirements.txt
+└── src (main working dir)
+    ├── Simple_Preprocessing_GLS.py (for make 4 lc plots && make dataframes)
+    └── batch_script.txt
+</pre>
 
 <a name="tasks"></a>
 ## Tasks
