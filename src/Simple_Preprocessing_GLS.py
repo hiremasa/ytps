@@ -116,7 +116,7 @@ def Excecut_GLS(lc_clean):
 
 
 if __name__ == "__main__":
-
+    print("==================================================")
     if args.collect:
         files = glob("../output/dataframes/TOI*.csv")
         files.sort()
@@ -130,8 +130,6 @@ if __name__ == "__main__":
         all_df.to_csv("../output/all_df.csv")
 
     else:
-        target_star = args.target_star
-
         if args.verbose:
             print(f"***Searching for {args.target_star}")
         try:
@@ -156,22 +154,23 @@ if __name__ == "__main__":
                 for lc_item in lc_file:
                     lc = lc_item.download()
                     lc_clean = lc.normalize().remove_nans().remove_outliers(sigma_lower=args.sigma_lower, sigma_upper=args.sigma_upper)
-
+                    print("Successfully downloaded the Light Curve")
                     gls, preds = Excecut_GLS(lc_clean=lc_clean)
 
                     fig = plot_4figures(lc, lc_clean, gls, preds)
-                    fig.savefig(f"../output/images/{args.target_star}_SECTOR{lc.SECTOR}.png")
+                    fig.savefig(f"../output/images/{target_star}_SECTOR{lc.SECTOR}.png")
                     pd.Series(preds, name=f"{target_star}_SECTOR{lc.SECTOR}").to_csv(f"../output/dataframes/{args.target_star}.csv")
                     print("Successfully Finished!!")
             else: #args.sector_all==False
                 lc = lc_file[0].download()
                 lc_clean = lc.normalize().remove_nans().remove_outliers(sigma_lower=args.sigma_lower, sigma_upper=args.sigma_upper)
+                print("Successfully downloaded the Light Curve")
 
                 gls, preds = Excecut_GLS(lc_clean=lc_clean)
 
                 #save the results
                 fig = plot_4figures(lc, lc_clean, gls, preds)
-                fig.savefig(f"../output/images/{args.target_star}_SECTOR{lc.SECTOR}.png")
+                fig.savefig(f"../output/images/{target_star}_SECTOR{lc.SECTOR}.png")
                 pd.Series(preds, name=f"{target_star}_SECTOR{lc.SECTOR}").to_csv(f"../output/dataframes/{args.target_star}.csv")
                 print("Successfully Finished!!")
         except Exception as e:
