@@ -54,9 +54,9 @@ if not os.path.exists("../output"):
     os.makedirs("../output/images")
     os.makedirs("../output/dataframes")
 
-def plot_4figures(lc, lc_clean, gls, preds):
+def plot_4figures(name, lc, lc_clean, gls, preds):
     fig, axes = plt.subplots(2, 2, figsize=(10, 10), tight_layout=True, facecolor="whitesmoke")
-    fig.suptitle(f"{args.target_star}, TIC {lc.TICID}, sector {lc.SECTOR}", fontsize=30)
+    fig.suptitle(f"{name}, TIC {lc.TICID}, sector {lc.SECTOR}", fontsize=30)
     axes = axes.flatten()
 
     #plot raw flux
@@ -155,10 +155,10 @@ if __name__ == "__main__":
                 for lc_item in lc_file:
                     lc = lc_item.download()
                     lc_clean = lc.normalize().remove_nans().remove_outliers(sigma_lower=args.sigma_lower, sigma_upper=args.sigma_upper)
-                    print("Successfully downloaded the Light Curve")
+                    print(f"Successfully downloaded the Light Curve of {name}")
                     gls, preds = Excecut_GLS(lc_clean=lc_clean)
 
-                    fig = plot_4figures(lc, lc_clean, gls, preds)
+                    fig = plot_4figures(name, lc, lc_clean, gls, preds)
                     sector = str(lc.sector).zfill(2)
                     fig.savefig(f"../output/images/{name}_SECTOR{sector}.png".replace(" ", ""))
                     pd.Series(preds, name=f"{name}_SECTOR{sector}").to_csv(f"../output/dataframes/{args.target_star}.csv")
@@ -166,12 +166,12 @@ if __name__ == "__main__":
             else: #args.sector_all==False
                 lc = lc_file[0].download()
                 lc_clean = lc.normalize().remove_nans().remove_outliers(sigma_lower=args.sigma_lower, sigma_upper=args.sigma_upper)
-                print("Successfully downloaded the Light Curve")
+                print(f"Successfully downloaded the Light Curve of {name}")
 
                 gls, preds = Excecut_GLS(lc_clean=lc_clean)
 
                 #save the results
-                fig = plot_4figures(lc, lc_clean, gls, preds)
+                fig = plot_4figures(name, lc, lc_clean, gls, preds)
                 sector = str(lc.sector).zfill(2)
                 fig.savefig(f"../output/images/{name}_SECTOR{sector}.png")
                 pd.Series(preds, name=f"{name}_SECTOR{sector}").to_csv(f"../output/dataframes/{args.target_star}.csv".replace(" ", ""))
