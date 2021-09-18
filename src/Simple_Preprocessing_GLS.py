@@ -130,22 +130,23 @@ if __name__ == "__main__":
         all_df.to_csv("../output/all_df.csv")
 
     else:
-        if args.verbose:
-            print(f"***Searching for {args.target_star}")
         try:
             #load lc
             if args.NAME is not None:
-                lc_file = lk.search_lightcurve(args.NAME, author=args.author, exptime=args.exptime)
                 target_star = args.NAME
             elif args.TOI is not None:
-                lc_file = lk.search_lightcurve(args.TOI, author=args.author, exptime=args.exptime)
-                target_star = args.TOI
+                target_star = f"TOI {args.TOI}"
             elif args.TIC is not None:
-                lc_file = lk.search_lightcurve(args.TIC, author=args.author, exptime=args.exptime)
-                target_star = args.TIC
+                target_star = f"TIC {args.TIC}"
             else:
-                lc_file = lk.search_lightcurve(args.target_star, author=args.author, exptime=args.exptime)
-                target_star = args.target_star
+                 target_star = args.target_star
+            if args.verbose:
+                print(f"***Searching for {target_star}")
+            lc_file = lk.search_lightcurve(target_star, author=args.author, exptime=args.exptime)
+            if args.TOI is not None:
+                name = f"TOI{str(args.TOI).zfill(4)}"
+            else:
+                name = target_star.replace(" ", "")
             if len(lc_file) < 1:
                 raise ValueError("Warning: No Light Curves found")
 
@@ -158,8 +159,9 @@ if __name__ == "__main__":
                     gls, preds = Excecut_GLS(lc_clean=lc_clean)
 
                     fig = plot_4figures(lc, lc_clean, gls, preds)
-                    fig.savefig(f"../output/images/{target_star}_SECTOR{lc.SECTOR}.png")
-                    pd.Series(preds, name=f"{target_star}_SECTOR{lc.SECTOR}").to_csv(f"../output/dataframes/{args.target_star}.csv")
+                    sector = str(lc.sector).zfill(2)
+                    fig.savefig(f"../output/images/{name}_SECTOR{sector}.png".replace(" ", ""))
+                    pd.Series(preds, name=f"{name}_SECTOR{sector}").to_csv(f"../output/dataframes/{args.target_star}.csv")
                     print("Successfully Finished!!")
             else: #args.sector_all==False
                 lc = lc_file[0].download()
@@ -170,10 +172,10 @@ if __name__ == "__main__":
 
                 #save the results
                 fig = plot_4figures(lc, lc_clean, gls, preds)
-                fig.savefig(f"../output/images/{target_star}_SECTOR{lc.SECTOR}.png")
-                pd.Series(preds, name=f"{target_star}_SECTOR{lc.SECTOR}").to_csv(f"../output/dataframes/{args.target_star}.csv")
+                sector = str(lc.sector).zfill(2)
+                fig.savefig(f"../output/images/{name}_SECTOR{sector}.png")
+                pd.Series(preds, name=f"{name}_SECTOR{sector}").to_csv(f"../output/dataframes/{args.target_star}.csv".replace(" ", ""))
                 print("Successfully Finished!!")
         except Exception as e:
             print(e)
         print("==================================================")
-
