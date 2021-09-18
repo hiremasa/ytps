@@ -43,7 +43,7 @@ parser.add_argument('--verbose', action="store_true", default=False,
                     help='verbose (default: False)')
 parser.add_argument('--collect', type=bool, default=False,
                     help='collect all outputs (default: False)')
-parser.add_argument('--sector_all', type=bool, default=False,
+parser.add_argument('--sector_all', type=bool, default=True,
                     help='select lc from all sectors or only one sector (default: False)')
 
 
