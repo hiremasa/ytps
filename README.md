@@ -33,6 +33,7 @@
 ## Library
 - [Lightkurve](https://docs.lightkurve.org/reference/lightcurve.html)
 - [Astropy](https://www.astropy.org/)
+- [exoplanet](https://docs.exoplanet.codes/en/latest/)
 - [Generalized LombScargle](https://arxiv.org/abs/0901.2573)(astro-ph.IM)
 ## Documentation
 - [TESS](https://tess.mit.edu/science/data/)
