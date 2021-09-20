@@ -2,7 +2,7 @@
 - [Directory](#directory)
 - [Tasks](#tasks)
 - [References](#references)
-
+- [Paper List](#paper_list)
 ---
 <a name="directory"></a>
 # Directory description of this repository
@@ -19,7 +19,7 @@
     ├── Simple_Preprocessing_GLS.py (for make 4 lc plots && make dataframes)
     └── batch_script.txt
 </pre>
-
+---
 <a name="tasks"></a>
 # Tasks
 ### 7/5: Lightkurve tutorial by making Line Curve of "TOI-519" & "55 Cancri"
@@ -39,3 +39,8 @@
 - [TESS](https://tess.mit.edu/science/data/)
 - [ExoFOP-TESS](https://exofop.ipac.caltech.edu/tess/)
 - [SYSTEMATIC CLASSIFICATION OF TESS ECLIPSING BINARIES](https://jbirky.github.io/content/AAS_235_Poster.pdf)
+
+---
+<a name="paper_list"></a>
+# Paper List
+- [Exoplanet Detection using Machine Learning](https://arxiv.org/abs/2011.14135)
