@@ -16,6 +16,9 @@ from gls import Gls
 import argparse
 from glob import glob
 
+import warnings
+warnings.simplefilter('ignore')
+from tqdm import tqdm
 
 parser = argparse.ArgumentParser(description='Output Fig & CSV file from one star by\
                     Simple Preprocessing and GLS')
@@ -44,7 +47,7 @@ parser.add_argument('--verbose', action="store_true", default=False,
 parser.add_argument('--collect', type=bool, default=False,
                     help='collect all outputs (default: False)')
 parser.add_argument('--sector_all', type=bool, default=True,
-                    help='select lc from all sectors or only one sector (default: False)')
+                    help='select lc from all sectors or only one sector (default: True)')
 
 
 args = parser.parse_args()
@@ -122,7 +125,7 @@ if __name__ == "__main__":
         files.sort()
 
         ss = []
-        for f in files:
+        for f in tqdm(files):
             s = pd.read_csv(f, squeeze=True, index_col=0)
             ss.append(s)
 
@@ -158,10 +161,12 @@ if __name__ == "__main__":
                     print(f"Successfully downloaded the Light Curve of {name}")
                     gls, preds = Excecut_GLS(lc_clean=lc_clean)
 
+                    #save the results
                     fig = plot_4figures(name, lc, lc_clean, gls, preds)
                     sector = str(lc.sector).zfill(2)
                     fig.savefig(f"../output/images/{name}_SECTOR{sector}.png".replace(" ", ""))
-                    pd.Series(preds, name=f"{name}_SECTOR{sector}").to_csv(f"../output/dataframes/{args.target_star}.csv")
+                    plt.close()
+                    pd.Series(preds, name=f"{name}_SECTOR{sector}").to_csv(f"../output/dataframes/{name}_SECTOR{sector}.csv".replace(" ", ""))
                     print("Successfully Finished!!")
             else: #args.sector_all==False
                 lc = lc_file[0].download()
@@ -174,7 +179,8 @@ if __name__ == "__main__":
                 fig = plot_4figures(name, lc, lc_clean, gls, preds)
                 sector = str(lc.sector).zfill(2)
                 fig.savefig(f"../output/images/{name}_SECTOR{sector}.png")
-                pd.Series(preds, name=f"{name}_SECTOR{sector}").to_csv(f"../output/dataframes/{args.target_star}.csv".replace(" ", ""))
+                plt.close()
+                pd.Series(preds, name=f"{name}_SECTOR{sector}").to_csv(f"../output/dataframes/{name}_SECTOR{sector}.csv".replace(" ", ""))
                 print("Successfully Finished!!")
         except Exception as e:
             print(e)
