@@ -11,13 +11,20 @@
 .
 ├── homeworks
 ├── output (all outputs are stored here)
-│   ├── all_df.csv
-│   ├── dataframes
-│   └── images
+│   ├── all_df.csv (concatenated from all df in dataframes/)
+│   ├── all_df_sort_pmax.csv (sorted all_df.csv by pmax)
+│   ├── compare_df.csv
+│   ├── dataframes/
+│   └── images/
 ├── requirements.txt
 └── src (main working dir)
     ├── Simple_Preprocessing_GLS.py (for make 4 lc plots && make dataframes)
-    └── batch_script.txt
+    ├── gls.py
+    ├── make_batch_script.py
+    ├── make_compare_df.py
+    ├── get_tois.py
+    ├── batch_script.txt
+    └── working_notebook.ipynb
 </pre>
 ---
 <a name="tasks"></a>
@@ -35,6 +42,8 @@
 - [Astropy](https://www.astropy.org/)
 - [exoplanet](https://docs.exoplanet.codes/en/latest/)
 - [Generalized LombScargle](https://arxiv.org/abs/0901.2573)(astro-ph.IM)
+- [Transit Least Square](https://github.com/hippke/tls)
+- [Wotan](https://github.com/hippke/wotan)
 ## Documentation
 - [TESS](https://tess.mit.edu/science/data/)
 - [ExoFOP-TESS](https://exofop.ipac.caltech.edu/tess/)

@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 
 import gc
 import sys
-sys.path.append('../GLS/python/')
+#sys.path.append('../GLS/python/')
 
 import lightkurve as lk
 from astropy.timeseries import LombScargle
@@ -16,43 +16,33 @@ from gls import Gls
 import argparse
 from glob import glob
 
+import warnings
+warnings.simplefilter('ignore')
+from tqdm import tqdm
 
 parser = argparse.ArgumentParser(description='Output Fig & CSV file from one star by\
                     Simple Preprocessing and GLS')
-parser.add_argument('--target_star', type=str, default="TOI 540",
-                    help='the name of target star (default: "TOI540")')
-parser.add_argument('--NAME', type=str, default=None,
-                    help='name of the target (default: None)')
-parser.add_argument('--TOI', type=str, default=None,
-                    help='TOI (default: None)')
-parser.add_argument('--TIC', type=str, default=None,
-                    help='TIC (default: None)')
-parser.add_argument('--author', type=str, default="SPOC",
-                    help='author (default: "SPOC")')
-parser.add_argument('--exptime', type=int, default=120,
-                    help='exposure time')
-parser.add_argument('--sigma_lower', type=int, default=20,
-                    help='sigma_lower for remove outliers (default: 20)')
-parser.add_argument('--sigma_upper', type=int, default=10,
-                    help='sigma_upper for remove outliers (default: 10)')
-parser.add_argument('--Pbeg', type=float, default=0.1,
-                    help='minimumn P(period) value (default: 0.1)')
-parser.add_argument('--Pend', type=float, default=10,
-                    help='maximumn P(period) value (default: 10)')
-parser.add_argument('--verbose', action="store_true", default=False,
-                    help='verbose (default: False)')
-parser.add_argument('--collect', type=bool, default=False,
-                    help='collect all outputs (default: False)')
-parser.add_argument('--sector_all', type=bool, default=True,
-                    help='select lc from all sectors or only one sector (default: False)')
-
-
+parser.add_argument('--target_star', type=str, default="TOI 540", help='the name of target star (default: "TOI540")')
+parser.add_argument('--NAME', type=str, default=None, help='name of the target (default: None)')
+parser.add_argument('--TOI', type=str, default=None, help='TOI (default: None)')
+parser.add_argument('--TIC', type=str, default=None, help='TIC (default: None)')
+parser.add_argument('--author', type=str, default="SPOC", help='author (default: "SPOC")')
+parser.add_argument('--exptime', type=int, default=120, help='exposure time')
+parser.add_argument('--sigma_lower', type=int, default=20, help='sigma_lower for remove outliers (default: 20)')
+parser.add_argument('--sigma_upper', type=int, default=10, help='sigma_upper for remove outliers (default: 10)')
+parser.add_argument('--Pbeg', type=float, default=0.1, help='minimumn P(period) value (default: 0.1)')
+parser.add_argument('--Pend', type=float, default=10, help='maximumn P(period) value (default: 10)')
+parser.add_argument('--verbose', action="store_true", default=False, help='verbose (default: False)')
+parser.add_argument('--collect', type=bool, default=False, help='collect all outputs (default: False)')
+parser.add_argument('--sector_all', type=bool, default=True, help='select lc from all sectors or only one sector (default: True)')
+parser.add_argument('--experiment_name', type=str, default=None, help='folder under output dir according to the experiment')
+parser.add_argument('--sector_number', type=int, default=None, help='the number of sector')
 args = parser.parse_args()
 
-if not os.path.exists("../output"):
-    os.makedirs("../output")
-    os.makedirs("../output/images")
-    os.makedirs("../output/dataframes")
+if not os.path.exists(f"../output/{args.experiment_name}"):
+    os.makedirs(f"../output/{args.experiment_name}")
+    os.makedirs(f"../output/{args.experiment_name}/images")
+    os.makedirs(f"../output/{args.experiment_name}/dataframes")
 
 def plot_4figures(name, lc, lc_clean, gls, preds):
     fig, axes = plt.subplots(2, 2, figsize=(10, 10), tight_layout=True, facecolor="whitesmoke")
@@ -118,16 +108,16 @@ def Excecut_GLS(lc_clean):
 if __name__ == "__main__":
     print("==================================================")
     if args.collect:
-        files = glob("../output/dataframes/TOI*.csv")
+        files = glob(f"../output/{args.experiment_name}/dataframes/*.csv")
         files.sort()
 
         ss = []
-        for f in files:
+        for f in tqdm(files):
             s = pd.read_csv(f, squeeze=True, index_col=0)
             ss.append(s)
 
         all_df = pd.concat(ss, axis=1)
-        all_df.to_csv("../output/all_df.csv")
+        all_df.to_csv(f"../output/{args.experiment_name}/all_df.csv")
 
     else:
         try:
@@ -142,7 +132,7 @@ if __name__ == "__main__":
                  target_star = args.target_star
             if args.verbose:
                 print(f"***Searching for {target_star}")
-            lc_file = lk.search_lightcurve(target_star, author=args.author, exptime=args.exptime)
+            lc_file = lk.search_lightcurve(target_star, author=args.author, exptime=args.exptime, sector=args.sector_number)
             if args.TOI is not None:
                 name = f"TOI{str(args.TOI).zfill(4)}"
             else:
@@ -158,10 +148,12 @@ if __name__ == "__main__":
                     print(f"Successfully downloaded the Light Curve of {name}")
                     gls, preds = Excecut_GLS(lc_clean=lc_clean)
 
+                    #save the results
                     fig = plot_4figures(name, lc, lc_clean, gls, preds)
                     sector = str(lc.sector).zfill(2)
-                    fig.savefig(f"../output/images/{name}_SECTOR{sector}.png".replace(" ", ""))
-                    pd.Series(preds, name=f"{name}_SECTOR{sector}").to_csv(f"../output/dataframes/{args.target_star}.csv")
+                    fig.savefig(f"../output/{args.experiment_name}/images/{name}_SECTOR{sector}.png".replace(" ", ""))
+                    plt.close()
+                    pd.Series(preds, name=f"{name}_SECTOR{sector}").to_csv(f"../output/{args.experiment_name}/dataframes/{name}_SECTOR{sector}.csv".replace(" ", ""))
                     print("Successfully Finished!!")
             else: #args.sector_all==False
                 lc = lc_file[0].download()
@@ -173,8 +165,9 @@ if __name__ == "__main__":
                 #save the results
                 fig = plot_4figures(name, lc, lc_clean, gls, preds)
                 sector = str(lc.sector).zfill(2)
-                fig.savefig(f"../output/images/{name}_SECTOR{sector}.png")
-                pd.Series(preds, name=f"{name}_SECTOR{sector}").to_csv(f"../output/dataframes/{args.target_star}.csv".replace(" ", ""))
+                fig.savefig(f"../output/{args.experiment_name}/images/{name}_SECTOR{sector}.png")
+                plt.close()
+                pd.Series(preds, name=f"{name}_SECTOR{sector}").to_csv(f"../output/{args.experiment_name}/dataframes/{name}_SECTOR{sector}.csv".replace(" ", ""))
                 print("Successfully Finished!!")
         except Exception as e:
             print(e)
