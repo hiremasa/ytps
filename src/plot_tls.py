@@ -21,7 +21,7 @@ def get_transit_mask(lc, period, epoch, duration_hours):
         & (epoch is not None)
         & (duration_hours is not None)
     )
-    temp_fold = lc.fold(period, t0=epoch)
+    temp_fold = lc.fold(period, epoch_time=epoch)
     fractional_duration = (duration_hours / 24.0) / period
     phase_mask = np.abs(temp_fold.phase) < (fractional_duration * 1.5)
     transit_mask = np.in1d(lc.time, temp_fold.time_original[phase_mask])
@@ -49,6 +49,11 @@ def plot_tls(lc_clean, flatten_lc, trend_lc, results):
     Returns:
         fig : 'matplotlib.figure.Figure' object
     """
+    assert isinstance(lc_clean, lk.LightCurve)
+    assert isinstance(flatten_lc, np.ndarray)
+    assert isinstance(trend_lc, np.ndarray)
+    assert isinstance(results, dict)
+
     time = lc_clean.time.value
     flux = lc_clean.flux.value
 
@@ -103,8 +108,8 @@ def plot_tls(lc_clean, flatten_lc, trend_lc, results):
     ax.set_xlim(-results.duration,results.duration)
     #plt.xlim(0.48, 0.52)
     ax.ticklabel_format(useOffset=False)
-    ax.set_xlabel('Phase (days)')
-    ax.set_ylabel('Relative flux')
+    ax.set_xlabel('Phase (days)', fontsize=12)
+    ax.set_ylabel('Relative flux', fontsize=12)
     ax.legend()
 
     return fig
