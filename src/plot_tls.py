@@ -1,8 +1,33 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import lightkurve as lk
 
+def get_transit_mask(lc, period, epoch, duration_hours):
+    """
+    lc : lk.LightCurve
+        lightcurve that contains time and flux properties
 
-def plot_tls(lc_clean, flatten_lc, trend_lc, result):
+    Another version using numpy arrays only
+    ---------------------------------------
+    mask = []
+    t0 += np.ceil((time[0] - dur - t0) / period) * period
+    for t in np.arange(t0, time[-1] + dur, period):
+        mask.extend(np.where(np.abs(time - t) < dur / 2.)[0])
+    return  np.array(mask)
+    """
+    assert isinstance(lc, lk.LightCurve)
+    assert (
+        (period is not None)
+        & (epoch is not None)
+        & (duration_hours is not None)
+    )
+    temp_fold = lc.fold(period, t0=epoch)
+    fractional_duration = (duration_hours / 24.0) / period
+    phase_mask = np.abs(temp_fold.phase) < (fractional_duration * 1.5)
+    transit_mask = np.in1d(lc.time, temp_fold.time_original[phase_mask])
+    return transit_mask
+
+def plot_tls(lc_clean, flatten_lc, trend_lc, results):
     """Plot a figure for TLS pipline
 
     This function returns a figure containing 1. clean lc w/ baseline 2. flatten lc 3. periodgram of transit 4. phase folded lc
@@ -16,11 +41,11 @@ def plot_tls(lc_clean, flatten_lc, trend_lc, result):
                         from wotan.flatten() func.
         trend_lc : 'numpy.ndarray' object
                         from wotan.flatten() func.
-        result : 'transitleastsquares.results.transitleastsquaresresults' object
+        results : 'transitleastsquares.results.transitleastsquaresresults' object
                         from transitleastsquares.transitleastsquares(time, flatten_lc) func.
 
     ----------
-    
+
     Returns:
         fig : 'matplotlib.figure.Figure' object
     """
@@ -34,19 +59,22 @@ def plot_tls(lc_clean, flatten_lc, trend_lc, result):
     # 1. clean lc w/ baseline
     ax = axes[0]
     ax.set_title('Clean lc w/ baseline', fontsize=20)
-    ax.scatter(time, flux, s=1, color='black', label="row data")
-    ax.plot(time, trend_lc, linewidth=2, color='red', label="base line curve", linestyle='dashed')
+    ax.scatter(time, flux, s=1, color='black', label="raw data")
+    ax.plot(time, trend_lc, linewidth=2, color='red', label="baseline", linestyle='dashed')
     ax.legend(loc='best')
     ax.set_xlabel('Time (days)', fontsize=12)
     ax.set_ylabel('Raw flux', fontsize=12)
 
     # 2. Flatten lc
     ax = axes[1]
-    ax.set_title('Flatten lc', fontsize=20)
+    ax.set_title('Flattened lc', fontsize=20)
     ax.scatter(time, flatten_lc, s=1, label='flat')
-    mask = [False] * len(time)
-    for i in range(int((time.max() - results.T0)//results.period) + 1):
-        mask |= (time >= results.T0 + i * results.period - 5*results.period_uncertainty) & (time <= results.T0 + i * results.period + 5*results.period_uncertainty)
+    # mask = [False] * len(time)
+    # for i in range(int((time.max() - results.T0)//results.period) + 1):
+    #     mask |= (time >= results.T0 + i * results.period - 5*results.period_uncertainty) & (time <= results.T0 + i * results.period + 5*results.period_uncertainty)
+    mask = get_transit_mask(
+                lc_clean, results.period, results.T0, results.duration * 24
+            )
     ax.scatter(time[mask], flatten_lc[mask], s=1, color="red", label='transit')
     ax.legend()
     ax.set_xlabel('Time (days)', fontsize=12)
@@ -59,7 +87,7 @@ def plot_tls(lc_clean, flatten_lc, trend_lc, result):
     for n in range(2, 10):
         ax.axvline(n*results.period, alpha=0.4, lw=1, linestyle="dashed")
         ax.axvline(results.period/n, alpha=0.4, lw=1, linestyle="dashed")
-    ax.set_title('Transit Least Squares SDE', fontsize=20)
+    ax.set_title('TLS periodogram', fontsize=20)
     ax.set_ylabel(r'SDE')
     ax.set_xlabel('Period (days)')
     ax.plot(results.periods, results.power, color='black', lw=0.5, label="Othe periods [d]")
@@ -68,12 +96,15 @@ def plot_tls(lc_clean, flatten_lc, trend_lc, result):
 
     # 4. Folded lc
     ax = axes[3]
-    ax.plot(results.model_folded_phase, results.model_folded_model, color='red', label="TLS model \nfoled at Prot")
-    ax.scatter(results.folded_phase, results.folded_y, s=10, zorder=2, alpha=0.5)
+    ax.plot((results.model_folded_phase-0.5)*results.period, results.model_folded_model, color='red', label="TLS model \nfolded at Porb")
+    ax.scatter((results.folded_phase-0.5)*results.period, results.folded_y, s=10, zorder=2, alpha=0.5)
+    ax.set_title('Phase-folded lc', fontsize=20)
+    # zoom-in to transit center
+    ax.set_xlim(-results.duration,results.duration)
     #plt.xlim(0.48, 0.52)
     ax.ticklabel_format(useOffset=False)
-    ax.set_xlabel('Phase')
+    ax.set_xlabel('Phase (days)')
     ax.set_ylabel('Relative flux')
     ax.legend()
-    
+
     return fig
