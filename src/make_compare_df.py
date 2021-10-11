@@ -1,7 +1,14 @@
+import os
+import sys
 import pandas as pd
-
+import argparse
+assert os.getcwd() == '/home/kobayashi/project/B4_research/src', \
+        'cwd is incorrect(expected: /home/kobayashi/project/B4_research/src/)'
+parser = argparse.ArgumentParser(description='summarize all dataframes into all_df.csv')
+parser.add_argument('--experiment_name', type=str, default=None, help='folder name under .output/ according to the experiment')
+args = parser.parse_args()
 if __name__ == "__main__":
-    df_all = pd.read_csv("../output/all_df.csv", index_col=0)
+    df_all = pd.read_csv(f"../output/{args.experiment_name}/all_df.csv", index_col=0)
     df_all = df_all.transpose()
 
     df_all["TOI"] = df_all.index.map(lambda x: x.split("_")[0])
@@ -11,4 +18,4 @@ if __name__ == "__main__":
     df_compare["P_mean"] = df_temp.values
     df_compare["P_std"] = df_all.groupby("TOI").std(ddof=0)["P"].values
 
-    df_compare.to_csv("../output/compare_df.csv")
+    df_compare.to_csv(f"../output/{args.experiment_name}/compare_df.csv")

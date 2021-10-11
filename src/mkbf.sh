@@ -1,1 +1,1 @@
-cat all_targets_S041_v1.txt | awk -F " " '{print $1}' | while read tic; do echo python Simple_Preprocessing_GLS.py --TIC $tic --verbose --sector_number 41 --experiment_name sector41; done > sector41.batch
+cat all_targets_S041_v1.txt | awk -F " " '{print $1}' | while read tic; do echo python simple_preprocessing_gls.py --TIC $tic --verbose --sector_number 41 --experiment_name sector41; done > sector41.batch
