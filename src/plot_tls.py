@@ -23,8 +23,8 @@ def get_transit_mask(lc, period, epoch, duration_hours):
     )
     temp_fold = lc.fold(period, epoch_time=epoch)
     fractional_duration = (duration_hours / 24.0) / period
-    phase_mask = np.abs(temp_fold.phase) < (fractional_duration * 1.5)
-    transit_mask = np.in1d(lc.time, temp_fold.time_original[phase_mask])
+    phase_mask = np.abs(temp_fold.phase.value) < (fractional_duration * 1.5)
+    transit_mask = np.in1d(lc.time.value, temp_fold.time_original[phase_mask].value)
     return transit_mask
 
 def plot_tls(lc_clean, flatten_lc, trend_lc, results):
