@@ -53,3 +53,5 @@
 <a name="paper_list"></a>
 # Paper List
 - [Exoplanet Detection using Machine Learning](https://arxiv.org/abs/2011.14135)
+- [Transit Least Square](https://arxiv.org/pdf/1901.02015.pdf)
+- 
