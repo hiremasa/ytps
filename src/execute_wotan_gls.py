@@ -30,7 +30,7 @@ parser.add_argument('--verbose', action="store_true", default=False, help='verbo
 parser.add_argument('--experiment_name', type=str, default=None, help='folder under output dir according to the experiment')
 parser.add_argument('--sector_number', type=int, default=None, help='the number of sector')
 parser.add_argument('--method', type=str, default='biweight', help='the method for wotan.flatten(default: biweight)')
-parser.add_argument('--window_length', type=int, default=0.3, help='the value for the arguent of wotan.flatten')
+parser.add_argument('--window_length', type=float, default=0.3, help='the value for the arguent of wotan.flatten')
 
 args = parser.parse_args()
 
@@ -42,6 +42,7 @@ if not os.path.exists(f"../output/{args.experiment_name}"):
 
 if not os.path.exists(f'../output/{args.experiment_name}/tls_images'):
     os.makedirs(f'../output/{args.experiment_name}/tls_images')
+    os.makedirs(f'../output/{args.experiment_name}/tls_hdf5')
     
 if __name__ == "__main__":
     print("==================================================")
@@ -92,7 +93,7 @@ if __name__ == "__main__":
         results['ticid'] = lc_clean.TICID
         results['sector'] = sector
         
-        h5_path = f'../output/{args.experiment_name}/{name}.h5'
+        h5_path = f'../output/{args.experiment_name}/tls_hdf5/{name}_SECTOR{sector}.h5'
         with h5py.File(h5_path, 'w') as f:
             f.create_dataset(results)
 
