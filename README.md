@@ -48,6 +48,7 @@
 - [TESS](https://tess.mit.edu/science/data/)
 - [ExoFOP-TESS](https://exofop.ipac.caltech.edu/tess/)
 - [SYSTEMATIC CLASSIFICATION OF TESS ECLIPSING BINARIES](https://jbirky.github.io/content/AAS_235_Poster.pdf)
+- [NASA Exoplanet Archive](https://exoplanetarchive.ipac.caltech.edu/cgi-bin/TblView/nph-tblView?app=ExoTbls&config=PS)
 
 ---
 <a name="paper_list"></a>
