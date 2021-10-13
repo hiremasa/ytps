@@ -54,5 +54,6 @@
 <a name="paper_list"></a>
 # Paper List
 - [Exoplanet Detection using Machine Learning](https://arxiv.org/abs/2011.14135)
-- [Transit Least Square](https://arxiv.org/pdf/1901.02015.pdf)
+- [Optimized transit detection algorithm to search forperiodic transits of small planets](https://arxiv.org/pdf/1901.02015.pdf)
+- [60 VALIDATED PLANETS FROMK2CAMPAIGNS 5–8](https://arxiv.org/pdf/1810.04074.pdf)
 - 
