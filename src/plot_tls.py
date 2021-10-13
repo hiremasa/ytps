@@ -87,7 +87,7 @@ def plot_tls(lc_clean, flatten_lc, trend_lc, results):
 
     # 3. Transit Least Squares SDE
     ax = axes[2]
-    ax.axvline(results.period, alpha=0.4, lw=3, label=f"peak = {results.period}")
+    ax.axvline(results.period, alpha=0.4, lw=3, label=f"peak = {results.period:.2f} d")
     ax.set_xlim(np.min(results.periods), np.max(results.periods))
     for n in range(2, 10):
         ax.axvline(n*results.period, alpha=0.4, lw=1, linestyle="dashed")
@@ -95,7 +95,7 @@ def plot_tls(lc_clean, flatten_lc, trend_lc, results):
     ax.set_title('TLS periodogram', fontsize=20)
     ax.set_ylabel(r'SDE')
     ax.set_xlabel('Period (days)')
-    ax.plot(results.periods, results.power, color='black', lw=0.5, label="Othe periods [d]")
+    ax.plot(results.periods, results.power, color='black', lw=0.5, label="harmonics")
     ax.legend()
     ax.set_xlim(0, max(results.periods))
 
@@ -105,7 +105,7 @@ def plot_tls(lc_clean, flatten_lc, trend_lc, results):
     ax.scatter((results.folded_phase-0.5)*results.period, results.folded_y, s=10, zorder=2, alpha=0.5)
     ax.set_title('Phase-folded lc', fontsize=20)
     # zoom-in to transit center
-    ax.set_xlim(-results.duration,results.duration)
+    ax.set_xlim(-results.duration*2,results.duration*2)
     #plt.xlim(0.48, 0.52)
     ax.ticklabel_format(useOffset=False)
     ax.set_xlabel('Phase (days)', fontsize=12)
