@@ -56,4 +56,4 @@
 - [Exoplanet Detection using Machine Learning](https://arxiv.org/abs/2011.14135)
 - [Optimized transit detection algorithm to search forperiodic transits of small planets](https://arxiv.org/pdf/1901.02015.pdf)
 - [60 VALIDATED PLANETS FROMK2CAMPAIGNS 5–8](https://arxiv.org/pdf/1810.04074.pdf)
-- 
+- [TESS DISCOVERY OF A TRANSITING SUPER-EARTH IN THEπMENSAE SYSTEM](https://arxiv.org/pdf/1809.05967.pdf)
