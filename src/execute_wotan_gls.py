@@ -84,7 +84,7 @@ if __name__ == "__main__":
 
         #save the results
         sector = str(lc.sector).zfill(2)
-        fig = plot_tls(lc_clean, flatten_lc, trend_lc, results)
+        fig = plot_tls(lc_clean, flatten_lc, trend_lc, results, TOI=args.TOI, sector=args.sector_number)
         results['time_raw'] = lc_clean.time
         fig.savefig(f"../output/{args.experiment_name}/tls_images/{name}_SECTOR{sector}.png")
         plt.close()

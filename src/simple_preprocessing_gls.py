@@ -137,7 +137,7 @@ if __name__ == "__main__":
                 name = f"TOI{str(args.TOI).zfill(4)}"
             else:
                 name = target_star.replace(" ", "")
-            if len(lc_file) < 1:
+            if not lc_file:
                 raise ValueError("Warning: No Light Curves found")
 
 
