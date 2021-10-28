@@ -31,6 +31,8 @@ parser.add_argument('--experiment_name', type=str, default=None, help='folder un
 parser.add_argument('--sector_number', type=int, default=None, help='the number of sector')
 parser.add_argument('--method', type=str, default='biweight', help='the method for wotan.flatten(default: biweight)')
 parser.add_argument('--window_length', type=float, default=0.3, help='the value for the arguent of wotan.flatten')
+parser.add_argument('--kernel', type=str, default='squared_exp', help='select one kernel(e.g squared_exp, matern)')
+parser.add_argument('--kernel_size', type=int, default=10, help='select kernel size')
 
 args = parser.parse_args()
 
@@ -72,7 +74,10 @@ if __name__ == "__main__":
         print('Preparing Wotan...')
         time = lc_clean.time.value
         flux = lc_clean.flux.value
-        flatten_lc, trend_lc = flatten(time, flux, window_length=args.window_length, return_trend=True, method=args.method, robust=True)
+        if args.method == 'gp':
+            flatten_lc, trend_lc = flatten(time, flux, return_trend=True, method=args.method, kernel=args.kernel, kernel_size=args.kernel_size, robust=True)
+        else:
+            flatten_lc, trend_lc = flatten(time, flux, window_length=args.window_length, return_trend=True, method=args.method, robust=True)
         print('Executed the Wotan flat')
         
         
@@ -84,9 +89,12 @@ if __name__ == "__main__":
 
         #save the results
         sector = str(lc.sector).zfill(2)
-        fig = plot_tls(lc_clean, flatten_lc, trend_lc, results, TOI=args.TOI, sector=args.sector_number)
+        fig = plot_tls(lc_clean, flatten_lc, trend_lc, results, args)
         results['time_raw'] = lc_clean.time
-        fig.savefig(f"../output/{args.experiment_name}/tls_images/{name}_SECTOR{sector}.png")
+        if args.method == 'gp':
+            fig.savefig(f"../output/{args.experiment_name}/tls_iamges/{name}_SECTOR{sector}_Method_GP_{args.kernel}.png")
+        else:
+            fig.savefig(f"../output/{args.experiment_name}/tls_images/{name}_SECTOR{sector}_Method_{args.method}.png")
         plt.close()
         results['flux_raw'] = lc_clean.flux
         results['flux_flat'] = flatten_lc

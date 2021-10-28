@@ -27,7 +27,7 @@ def get_transit_mask(lc, period, epoch, duration_hours):
     transit_mask = np.in1d(lc.time.value, temp_fold.time_original[phase_mask].value)
     return transit_mask
 
-def plot_tls(lc_clean, flatten_lc, trend_lc, results, TOI=None, sector=None):
+def plot_tls(lc_clean, flatten_lc, trend_lc, results, args):
     """Plot a figure for TLS pipline
 
     This function returns a figure containing 1. clean lc w/ baseline 2. flatten lc 3. periodgram of transit 4. phase folded lc
@@ -58,7 +58,10 @@ def plot_tls(lc_clean, flatten_lc, trend_lc, results, TOI=None, sector=None):
     flux = lc_clean.flux.value
 
     fig, axes = plt.subplots(2, 2, figsize=(10, 10), tight_layout=True, facecolor="whitesmoke")
-    fig.suptitle(f"TOI {TOI}, TIC {lc_clean.TICID} (sector {sector})", fontsize=30) # have to update TOI & sector args
+    if args.method == "gp":
+        fig.suptitle(f"TOI {args.TOI}, TIC {lc_clean.TICID} (sector {args.sector_number})\nMethod {args.method}, {args.kernel}kernel", fontsize=30)
+    else:
+        fig.suptitle(f"TOI {args.TOI}, TIC {lc_clean.TICID} (sector {args.sector_number})\nMethod {args.method}", fontsize=30) # have to update TOI & sector args
     axes = axes.flatten()
 
     # 1. clean lc w/ baseline
