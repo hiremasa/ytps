@@ -16,6 +16,7 @@ import lightkurve as lk
 from wotan import flatten
 from transitleastsquares import transitleastsquares
 import h5py
+import deepdish
 
 from plot_tls import get_transit_mask, plot_tls
 
@@ -32,7 +33,7 @@ parser.add_argument('--sector_number', type=int, default=None, help='the number 
 parser.add_argument('--method', type=str, default='biweight', help='the method for wotan.flatten(default: biweight)')
 parser.add_argument('--window_length', type=float, default=0.3, help='the value for the arguent of wotan.flatten')
 parser.add_argument('--kernel', type=str, default='squared_exp', help='select one kernel(e.g squared_exp, matern)')
-parser.add_argument('--kernel_size', type=int, default=10, help='select kernel size')
+parser.add_argument('--kernel_size', type=int, default=1, help='select kernel size')
 
 args = parser.parse_args()
 
@@ -44,8 +45,7 @@ if not os.path.exists(f"../output/{args.experiment_name}"):
 
 if not os.path.exists(f'../output/{args.experiment_name}/tls_images'):
     os.makedirs(f'../output/{args.experiment_name}/tls_images')
-    os.makedirs(f'../output/{args.experiment_name}/tls_hdf5')
-    
+    os.makedirs(f'../output/{args.experiment_name}/tls_hdf5') 
 if __name__ == "__main__":
     print("==================================================")
 
@@ -90,20 +90,27 @@ if __name__ == "__main__":
         #save the results
         sector = str(lc.sector).zfill(2)
         fig = plot_tls(lc_clean, flatten_lc, trend_lc, results, args)
-        results['time_raw'] = lc_clean.time
+#        results['time_raw'] = lc_clean.time
         if args.method == 'gp':
-            fig.savefig(f"../output/{args.experiment_name}/tls_iamges/{name}_SECTOR{sector}_Method_GP_{args.kernel}.png")
+            fig.savefig(f"../output/{args.experiment_name}/tls_images/{name}_SECTOR{sector}_Method_GP_{args.kernel}.png")
         else:
             fig.savefig(f"../output/{args.experiment_name}/tls_images/{name}_SECTOR{sector}_Method_{args.method}.png")
         plt.close()
-        results['flux_raw'] = lc_clean.flux
-        results['flux_flat'] = flatten_lc
-        results['ticid'] = lc_clean.TICID
-        results['sector'] = sector
+#        results['flux_raw'] = lc_clean.flux
+#        results['flux_flat'] = flatten_lc
+#        results['ticid'] = lc_clean.TICID
+#        results['sector'] = sector
         
-        h5_path = f'../output/{args.experiment_name}/tls_hdf5/{name}_SECTOR{sector}.h5'
-        with h5py.File(h5_path, 'w') as f:
-            f.create_dataset(results)
+        if args.method == "gp":
+            h5_path = f'../output/{args.experiment_name}/tls_hdf5/{name}_SECTOR{sector}_Method_{args.method}_Kernel_{args.kernel}.h5'
+        else:
+            h5_path = f'../output/{args.experiment_name}/tls_hdf5/{name}_SECTOR{sector}_Method_{args.method}.h5'
+
+#        with h5py.File(h5_path, 'w') as f:
+#            f.create_dataset("outputs", data=results)
+        print(results)
+        deepdish.io.save(h5_path, results)
+        print(f'Saved {h5_path.split("/")[-1]}')
 
         print("Successfully Finished!!")
     except Exception as e:

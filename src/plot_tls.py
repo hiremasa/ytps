@@ -59,7 +59,7 @@ def plot_tls(lc_clean, flatten_lc, trend_lc, results, args):
 
     fig, axes = plt.subplots(2, 2, figsize=(10, 10), tight_layout=True, facecolor="whitesmoke")
     if args.method == "gp":
-        fig.suptitle(f"TOI {args.TOI}, TIC {lc_clean.TICID} (sector {args.sector_number})\nMethod {args.method}, {args.kernel}kernel", fontsize=30)
+        fig.suptitle(f"TOI {args.TOI}, TIC {lc_clean.TICID} (sector {args.sector_number})\nMethod {args.method}, {args.kernel} kernel", fontsize=30)
     else:
         fig.suptitle(f"TOI {args.TOI}, TIC {lc_clean.TICID} (sector {args.sector_number})\nMethod {args.method}", fontsize=30) # have to update TOI & sector args
     axes = axes.flatten()
