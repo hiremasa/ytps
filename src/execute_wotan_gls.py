@@ -14,12 +14,13 @@ from glob import glob
 
 import lightkurve as lk
 from wotan import flatten
-from transitleastsquares import transitleastsquares
+from transitleastsquares import transitleastsquares, catalog_info
 import h5py
 import deepdish
 
 from plot_tls import get_transit_mask, plot_tls
-
+#sys.path.append("../wotan/wotan")
+from wotan import flatten
 parser = argparse.ArgumentParser(description='Download lc, then preprocess, applying wotan and TLS')
 parser.add_argument('--TOI', type=int, default=None, help='TOI (default: None)')
 parser.add_argument('--TIC', type=int, default=None, help='TIC (default: None)')
@@ -34,6 +35,8 @@ parser.add_argument('--method', type=str, default='biweight', help='the method f
 parser.add_argument('--window_length', type=float, default=0.3, help='the value for the arguent of wotan.flatten')
 parser.add_argument('--kernel', type=str, default='squared_exp', help='select one kernel(e.g squared_exp, matern)')
 parser.add_argument('--kernel_size', type=int, default=1, help='select kernel size')
+parser.add_argument('--period_min', type=float, default=0.5, help='min Minimum trial period (in units of days). If none is given, the limit is derived from the Roche limit')
+parser.add_argument('--tag', type=str, default=None, help='tag for output file name')
 
 args = parser.parse_args()
 
@@ -80,31 +83,40 @@ if __name__ == "__main__":
             flatten_lc, trend_lc = flatten(time, flux, window_length=args.window_length, return_trend=True, method=args.method, robust=True)
         print('Executed the Wotan flat')
         
-        
+        ab, R_star, R_star_min, R_star_max, M_star, M_star_min, M_star_max = catalog_info(TIC_ID=lc_clean.TICID) 
+        print(catalog_info(TIC_ID=lc_clean.TICID))
         #execute TLS
         print('Preparing TLS..')
         model = transitleastsquares(time, flatten_lc)
-        results = model.power()
-
-
+        results = model.power(
+            M_star_min=M_star - M_star_min,
+            R_star_min=R_star - R_star_min,
+            R_star_max=R_star + R_star_max,
+            M_star_max=M_star + M_star_max,
+            R_star=R_star,
+            M_star=M_star,
+            period_min=args.period_min,
+            #period_max=10,
+            )
+        print("successfully finished TLS")
         #save the results
         sector = str(lc.sector).zfill(2)
         fig = plot_tls(lc_clean, flatten_lc, trend_lc, results, args)
 #        results['time_raw'] = lc_clean.time
         if args.method == 'gp':
-            fig.savefig(f"../output/{args.experiment_name}/tls_images/{name}_SECTOR{sector}_Method_GP_{args.kernel}.png")
+            fig.savefig(f"../output/{args.experiment_name}/tls_images/{name}_SECTOR{sector}_Method_GP_{args.kernel}__{args.tag}.png")
         else:
-            fig.savefig(f"../output/{args.experiment_name}/tls_images/{name}_SECTOR{sector}_Method_{args.method}.png")
+            fig.savefig(f"../output/{args.experiment_name}/tls_images/{name}_SECTOR{sector}_Method_{args.method}__{args.tag}.png")
         plt.close()
 #        results['flux_raw'] = lc_clean.flux
 #        results['flux_flat'] = flatten_lc
-#        results['ticid'] = lc_clean.TICID
+        results['ticid'] = lc_clean.TICID
 #        results['sector'] = sector
         
         if args.method == "gp":
-            h5_path = f'../output/{args.experiment_name}/tls_hdf5/{name}_SECTOR{sector}_Method_{args.method}_Kernel_{args.kernel}.h5'
+            h5_path = f'../output/{args.experiment_name}/tls_hdf5/{name}_SECTOR{sector}_Method_{args.method}_Kernel_{args.kernel}_{args.tag}.h5'
         else:
-            h5_path = f'../output/{args.experiment_name}/tls_hdf5/{name}_SECTOR{sector}_Method_{args.method}.h5'
+            h5_path = f'../output/{args.experiment_name}/tls_hdf5/{name}_SECTOR{sector}_Method_{args.method}_{args.tag}.h5'
 
 #        with h5py.File(h5_path, 'w') as f:
 #            f.create_dataset("outputs", data=results)
