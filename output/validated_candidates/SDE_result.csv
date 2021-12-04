@@ -1,4 +1,4 @@
-,tic_id,st_age,pl_trandur,pl_orbper,pl_orbpererr1,pl_orbpererr2,sector,biweight,cosine,GP_squared_exp,GP_periodic_auto,biweight_SDE,cosine_SDE,gp_Kernel_squared_exp_SDE,gp_Kernel_periodic_auto_SDE
+,tic_id,st_age,pl_trandur,pl_orbper,pl_orbpererr1,pl_orbpererr2,sector,biweight,cosine,GP_squared_exp,GP_periodic_auto,biweight_SDE,cosine_SDE,GP_squared_exp_SDE,GP_periodic_auto_SDE
 0,TIC 166527623,0.017,4.822,6.959503,1.6e-05,-1.5e-05,11,1.0,1.0,1.0,1.0,0.2611917748041929,0.49628236797498354,13.567165616337354,6.478711337105701
 1,TIC 441420236,0.022,3.5,8.463,2e-06,-2e-06,01,1.0,1.0,1.0,1.0,-0.15712125930268392,0.9590432839388666,0.1431979102844397,2.1482952186193005
 2,TIC 441420236,0.022,3.5,8.46321,4e-05,-4e-05,01,1.0,1.0,1.0,1.0,-0.15712125930268392,1.6928266532944949,0.15565481678896784,4.532985567448619
