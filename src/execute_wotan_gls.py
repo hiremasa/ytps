@@ -19,7 +19,7 @@ import h5py
 import deepdish
 
 from plot_tls import get_transit_mask, plot_tls
-#sys.path.append("../wotan/wotan")
+sys.path.append("../wotan/wotan")
 from wotan import flatten
 parser = argparse.ArgumentParser(description='Download lc, then preprocess, applying wotan and TLS')
 parser.add_argument('--TOI', type=int, default=None, help='TOI (default: None)')
@@ -105,8 +105,10 @@ if __name__ == "__main__":
 #        results['time_raw'] = lc_clean.time
         if args.method == 'gp':
             fig.savefig(f"../output/{args.experiment_name}/tls_images/{name}_SECTOR{sector}_Method_GP_{args.kernel}__{args.tag}.png")
+            print("saved figure!")
         else:
             fig.savefig(f"../output/{args.experiment_name}/tls_images/{name}_SECTOR{sector}_Method_{args.method}__{args.tag}.png")
+            print("saved figure!")
         plt.close()
 #        results['flux_raw'] = lc_clean.flux
 #        results['flux_flat'] = flatten_lc
