@@ -1,6 +1,7 @@
 import os
 import gc
 import sys
+import math
 import numpy as np
 import pandas as pd
 import matplotlib
@@ -102,23 +103,24 @@ if __name__ == "__main__":
             #period_max=10,
             )
         print("successfully finished TLS")
+
         #save the results
+        args.sector_number = lc.sector
         sector = str(lc.sector).zfill(2)
-        args.sector_number = sector
         if args.TOI is None and args.TIC is not None:
             try:
                 df_tois = pd.read_csv("dataframe/TOIs.csv")
-                args.TOI = df_tois[df_tois["TIC ID"]==233602827]["TIC ID"].unique()[0]
+                args.TOI = math.floor(df_tois[df_tois["TIC ID"]==args.TIC]["TOI"].unique()[0])
             except:
                 pass
             
         fig = plot_tls(lc_clean, flatten_lc, trend_lc, results, args)
 #        results['time_raw'] = lc_clean.time
         if args.method == 'gp':
-            fig.savefig(f"../output/{args.experiment_name}/tls_images/{name}_SECTOR{args.sector_number}_Method_GP_{args.kernel}__{args.tag}.png")
+            fig.savefig(f"../output/{args.experiment_name}/tls_images/{name}_SECTOR{sector}_Method_GP_{args.kernel}__{args.tag}.png")
             print("saved figure!")
         else:
-            fig.savefig(f"../output/{args.experiment_name}/tls_images/{name}_SECTOR{args.sector_number}_Method_{args.method}__{args.tag}.png")
+            fig.savefig(f"../output/{args.experiment_name}/tls_images/{name}_SECTOR{sector}_Method_{args.method}__{args.tag}.png")
             print("saved figure!")
         plt.close()
 #        results['flux_raw'] = lc_clean.flux
@@ -127,9 +129,9 @@ if __name__ == "__main__":
 #        results['sector'] = sector
         
         if args.method == "gp":
-            h5_path = f'../output/{args.experiment_name}/tls_hdf5/{name}_SECTOR{args.sector_number}_Method_{args.method}_Kernel_{args.kernel}_{args.tag}.h5'
+            h5_path = f'../output/{args.experiment_name}/tls_hdf5/{name}_SECTOR{sector}_Method_{args.method}_Kernel_{args.kernel}_{args.tag}.h5'
         else:
-            h5_path = f'../output/{args.experiment_name}/tls_hdf5/{name}_SECTOR{args.sector_number}_Method_{args.method}_{args.tag}.h5'
+            h5_path = f'../output/{args.experiment_name}/tls_hdf5/{name}_SECTOR{sector}_Method_{args.method}_{args.tag}.h5'
 
 #        with h5py.File(h5_path, 'w') as f:
 #            f.create_dataset("outputs", data=results)
@@ -141,3 +143,4 @@ if __name__ == "__main__":
     except Exception as e:
          print(e)
 print("==================================================")
+
