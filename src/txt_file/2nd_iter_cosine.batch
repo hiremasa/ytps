@@ -1,0 +1,1 @@
+python execute_wotan_gls.py --TIC 166527623 --window_length 0.1768451783974088 --experiment_name validated_candidates --method cosine --tag 0

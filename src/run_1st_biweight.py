@@ -139,6 +139,11 @@ if __name__ == "__main__":
         deepdish.io.save(h5_path, results)
         print(f'Saved {h5_path.split("/")[-1]}')
 
+        with open("txt_file/2nd_iter_cosine.batch", mode="w") as f:
+           s = f"python execute_wotan_gls.py --TIC {args.TIC} --window_length {3*results['period']/24} --experiment_name validated_candidates --method cosine --tag {args.tag}"
+           f.write(s)
+
+
         print("Successfully Finished!!")
     except Exception as e:
          print(e)
