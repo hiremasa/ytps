@@ -18,6 +18,8 @@ from wotan import flatten
 from transitleastsquares import transitleastsquares, catalog_info
 import h5py
 import deepdish
+from astropy import constants as const 
+from astropy import units as u 
 
 from plot_tls import get_transit_mask, plot_tls
 sys.path.append("../wotan/wotan")
@@ -34,10 +36,9 @@ parser.add_argument('--experiment_name', type=str, default=None, help='folder un
 parser.add_argument('--sector_number', type=int, default=None, help='the number of sector')
 parser.add_argument('--method', type=str, default='biweight', help='the method for wotan.flatten(default: biweight)')
 parser.add_argument('--window_length', type=float, default=0.3, help='the value for the arguent of wotan.flatten')
-parser.add_argument('--kernel', type=str, default='squared_exp', help='select one kernel(e.g squared_exp, matern)')
-parser.add_argument('--kernel_size', type=int, default=1, help='select kernel size')
 parser.add_argument('--period_min', type=float, default=0.5, help='min Minimum trial period (in units of days). If none is given, the limit is derived from the Roche limit')
 parser.add_argument('--tag', type=str, default=None, help='tag for output file name')
+parser.add_argument('--log_file', type=str, default=None, help='log file name')
 
 args = parser.parse_args()
 
@@ -139,9 +140,14 @@ if __name__ == "__main__":
         deepdish.io.save(h5_path, results)
         print(f'Saved {h5_path.split("/")[-1]}')
 
-        with open("txt_file/2nd_iter_cosine.batch", mode="w") as f:
-           s = f"python execute_wotan_gls.py --TIC {args.TIC} --window_length {3*results['period']/24} --experiment_name validated_candidates --method cosine --tag {args.tag}"
-           f.write(s)
+        with open(f"txt_file/{args.log_file}.batch", mode="a") as f:
+            df_planets = pd.read_csv("dataframe/validated_candidate.csv", skiprows=119, )
+            Rs = df_planets[df_planets["tic_id"]=="TIC "+ str(args.TIC)]["st_rad"].unique()[0]
+            Ms = df_planets[df_planets["tic_id"]=="TIC "+ str(args.TIC)]["st_mass"].unique()[0]
+            P = results["period"]
+            T14 = Rs * u.R_sun * pow(4 * P * u.day / (np.pi * const.G * Ms * u.M_sun), 1/3)
+            s = f"python execute_wotan_gls.py --TIC {args.TIC} --window_length {3 * T14.to(u.day).value} --experiment_name {args.log_file} --method cosine --tag {args.tag}\n"
+            f.write(s)
 
 
         print("Successfully Finished!!")

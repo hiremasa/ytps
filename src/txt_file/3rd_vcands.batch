@@ -1,0 +1,7 @@
+python execute_wotan_gls.py --TIC 166527623 --window_length 0.5597485094939836 --experiment_name 3rd_vcands --method cosine --tag 0
+python execute_wotan_gls.py --TIC 441420236 --window_length 0.5078452444813096 --experiment_name 3rd_vcands --method cosine --tag 1
+python execute_wotan_gls.py --TIC 460205581 --window_length 0.4787696463672138 --experiment_name 3rd_vcands --method cosine --tag 2
+python execute_wotan_gls.py --TIC 410214986 --window_length 0.4724679388027513 --experiment_name 3rd_vcands --method cosine --tag 3
+python execute_wotan_gls.py --TIC 146520535 --window_length 0.362312901030404 --experiment_name 3rd_vcands --method cosine --tag 4
+python execute_wotan_gls.py --TIC 257605131 --window_length 0.4427300163975762 --experiment_name 3rd_vcands --method cosine --tag 5
+python execute_wotan_gls.py --TIC 180695581 --window_length 0.13908223664211086 --experiment_name 3rd_vcands --method cosine --tag 6

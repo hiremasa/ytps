@@ -1,1 +1,15 @@
-python execute_wotan_gls.py --TIC 166527623 --window_length 0.1768451783974088 --experiment_name validated_candidates --method cosine --tag 0
+python run_iterative.py --TIC 166527623 --window_length 0.3289933636804243 --experiment_name 2nd_iter_vcands --method cosine --tag 0 --log_file  3rd_vcands
+python run_iterative.py --TIC 441420236 --window_length 0.5012528409835717 --experiment_name 2nd_iter_vcands --method cosine --tag 1 --log_file  3rd_vcands
+python run_iterative.py --TIC 460205581 --window_length 0.34626159347836316 --experiment_name 2nd_iter_vcands --method cosine --tag 2 --log_file  3rd_vcands
+python run_iterative.py --TIC 410214986 --window_length 0.46991227499175575 --experiment_name 2nd_iter_vcands --method cosine --tag 3 --log_file  3rd_vcands
+python run_iterative.py --TIC 146520535 --window_length 0.4564253377717746 --experiment_name 2nd_iter_vcands --method cosine --tag 4 --log_file  3rd_vcands
+python run_iterative.py --TIC 257605131 --window_length 0.4610828231055006 --experiment_name 2nd_iter_vcands --method cosine --tag 5 --log_file  3rd_vcands
+python run_iterative.py --TIC 180695581 --window_length 0.13908223664211086 --experiment_name 2nd_iter_vcands --method cosine --tag 6 --log_file  3rd_vcands
+python run_iterative.py --TIC 224225541 --window_length 0.3656983918072593 --experiment_name 2nd_iter_vcands --method cosine --tag 7 --log_file  3rd_vcands
+python run_iterative.py --TIC 27491137 --window_length 0.3186383159481526 --experiment_name 2nd_iter_vcands --method cosine --tag 8 --log_file  3rd_vcands
+python run_iterative.py --TIC 383390264 --window_length 0.26585189494806394 --experiment_name 2nd_iter_vcands --method cosine --tag 9 --log_file  3rd_vcands
+python run_iterative.py --TIC 375506058 --window_length 0.4868008959048725 --experiment_name 2nd_iter_vcands --method cosine --tag 10 --log_file  3rd_vcands
+python run_iterative.py --TIC 130181866 --window_length 0.3984560788355988 --experiment_name 2nd_iter_vcands --method cosine --tag 11 --log_file  3rd_vcands
+python run_iterative.py --TIC 181804752 --window_length 0.12694687031050159 --experiment_name 2nd_iter_vcands --method cosine --tag 12 --log_file  3rd_vcands
+python run_iterative.py --TIC 307210830 --window_length 0.1627673482322204 --experiment_name 2nd_iter_vcands --method cosine --tag 13 --log_file  3rd_vcands
+python run_iterative.py --TIC 233602827 --window_length 0.14734672091889836 --experiment_name 2nd_iter_vcands --method cosine --tag 14 --log_file  3rd_vcands
