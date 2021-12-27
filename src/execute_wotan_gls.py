@@ -1,6 +1,8 @@
 import os
 import gc
 import sys
+import time as t
+import math
 import numpy as np
 import pandas as pd
 import matplotlib
@@ -37,7 +39,9 @@ parser.add_argument('--kernel', type=str, default='squared_exp', help='select on
 parser.add_argument('--kernel_size', type=int, default=1, help='select kernel size')
 parser.add_argument('--period_min', type=float, default=0.5, help='min Minimum trial period (in units of days). If none is given, the limit is derived from the Roche limit')
 parser.add_argument('--tag', type=str, default=None, help='tag for output file name')
-
+parser.add_argument('--log_file', type=str, default=None, help='log file name')
+parser.add_argument('--quality_bitmask', type=str, default='default', help='Bitmask that should be used to ignore bad-quality cadences.(“none”, “default”, “hard”, “hardest”, or int)')
+parser.add_argument('--bin', type=bool, default=False, help='bin the flux series or not')
 args = parser.parse_args()
 
 assert os.getcwd() == '/home/kobayashi/project/B4_research/src', \
@@ -53,6 +57,7 @@ if not os.path.exists(f'../output/{args.experiment_name}/tls_images'):
     os.makedirs(f'../output/{args.experiment_name}/tls_hdf5') 
     
 if __name__ == "__main__":
+    t0 = t.time()
     print("==================================================")
 
     try:
@@ -71,15 +76,20 @@ if __name__ == "__main__":
         if not lc_item:
             raise ValueError("Warning: No Light Curves found")
 
-        lc = lc_item.download()
+        lc = lc_item.download(quality_bitmask=args.quality_bitmask)
         lc_clean = lc.normalize().remove_nans().remove_outliers(sigma_lower=args.sigma_lower, sigma_upper=args.sigma_upper)
         print(f"Successfully downloaded the Light Curve of {name}")
 
 
         #execute Wotan
         print('Preparing Wotan...')
-        time = lc_clean.time.value
-        flux = lc_clean.flux.value
+        if args.bin:
+            time = lc_clean.time.value[::2]
+            flux = lc_clean.flux.value[::2]
+        else:
+            time = lc_clean.time.value
+            flux = lc_clean.flux.value
+
         if args.method == 'gp':
             flatten_lc, trend_lc = flatten(time, flux, return_trend=True, method=args.method, kernel=args.kernel, kernel_size=args.kernel_size, robust=True)
         else:
@@ -87,7 +97,7 @@ if __name__ == "__main__":
         print('Executed the Wotan flat')
         
         ab, R_star, R_star_min, R_star_max, M_star, M_star_min, M_star_max = catalog_info(TIC_ID=lc_clean.TICID) 
-        print(catalog_info(TIC_ID=lc_clean.TICID))
+        #print(catalog_info(TIC_ID=lc_clean.TICID))
         #execute TLS
         print('Preparing TLS..')
         model = transitleastsquares(time, flatten_lc)
@@ -102,23 +112,27 @@ if __name__ == "__main__":
             #period_max=10,
             )
         print("successfully finished TLS")
+        t1 = t.time()
+        
         #save the results
+        args.sector_number = lc.sector
         sector = str(lc.sector).zfill(2)
-        args.sector_number = sector
         if args.TOI is None and args.TIC is not None:
             try:
                 df_tois = pd.read_csv("dataframe/TOIs.csv")
-                args.TOI = df_tois[df_tois["TIC ID"]==233602827]["TIC ID"].unique()[0]
+                args.TOI = math.floor(df_tois[df_tois["TIC ID"]==args.TIC]["TOI"].unique()[0])
             except:
                 pass
             
         fig = plot_tls(lc_clean, flatten_lc, trend_lc, results, args)
 #        results['time_raw'] = lc_clean.time
         if args.method == 'gp':
-            fig.savefig(f"../output/{args.experiment_name}/tls_images/{name}_SECTOR{args.sector_number}_Method_GP_{args.kernel}__{args.tag}.png")
+            save_img_path = f"../output/{args.experiment_name}/tls_images/{name}_SECTOR{sector}_Method_GP_{args.kernel}__{args.tag}.png"
+            fig.savefig(save_img_path)
             print("saved figure!")
         else:
-            fig.savefig(f"../output/{args.experiment_name}/tls_images/{name}_SECTOR{args.sector_number}_Method_{args.method}__{args.tag}.png")
+            save_img_path = f"../output/{args.experiment_name}/tls_images/{name}_SECTOR{sector}_Method_{args.method}__{args.tag}.png"
+            fig.savefig(save_img_path)
             print("saved figure!")
         plt.close()
 #        results['flux_raw'] = lc_clean.flux
@@ -127,9 +141,9 @@ if __name__ == "__main__":
 #        results['sector'] = sector
         
         if args.method == "gp":
-            h5_path = f'../output/{args.experiment_name}/tls_hdf5/{name}_SECTOR{args.sector_number}_Method_{args.method}_Kernel_{args.kernel}_{args.tag}.h5'
+            h5_path = f'../output/{args.experiment_name}/tls_hdf5/{name}_SECTOR{sector}_Method_{args.method}_Kernel_{args.kernel}_{args.tag}.h5'
         else:
-            h5_path = f'../output/{args.experiment_name}/tls_hdf5/{name}_SECTOR{args.sector_number}_Method_{args.method}_{args.tag}.h5'
+            h5_path = f'../output/{args.experiment_name}/tls_hdf5/{name}_SECTOR{sector}_Method_{args.method}_{args.tag}.h5'
 
 #        with h5py.File(h5_path, 'w') as f:
 #            f.create_dataset("outputs", data=results)
@@ -137,6 +151,12 @@ if __name__ == "__main__":
         deepdish.io.save(h5_path, results)
         print(f'Saved {h5_path.split("/")[-1]}')
 
+        with open(f"txt_file/{args.log_file}.batch", mode="a") as f:
+            t2 = t.time()
+            s = f'total run time: {t2 - t0},\nFrom DL lk to Wotan: {t1 - t0}\nFrom Wotan to TLS: {t2 - t1}'
+            f.write(save_img_path)
+            f.write(s)
+            f.write("====================")
         print("Successfully Finished!!")
     except Exception as e:
          print(e)

@@ -54,8 +54,12 @@ def plot_tls(lc_clean, flatten_lc, trend_lc, results, args):
     assert isinstance(trend_lc, np.ndarray)
     assert isinstance(results, dict)
 
-    time = lc_clean.time.value
-    flux = lc_clean.flux.value
+    if args.bin:
+        time = lc_clean.time.value[::2]
+        flux = lc_clean.time.value[::2]
+    else:
+        time = lc_clean.time.value
+        flux = lc_clean.flux.value
 
     fig, axes = plt.subplots(2, 2, figsize=(10, 10), tight_layout=True, facecolor="whitesmoke")
     if args.method == "gp":

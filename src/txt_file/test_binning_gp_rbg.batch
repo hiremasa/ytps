@@ -1,0 +1,7 @@
+python execute_wotan_gls.py --TIC 130181866 --experiment_name validated_cands_test --method gp --kernel squared_exp --kernel_size 1 --bin True --tag 0_qbit_default_bin_true
+python execute_wotan_gls.py --TIC 181804752 --experiment_name validated_cands_test --method gp --kernel squared_exp --kernel_size 1 --bin True --tag 1_qbit_default_bin_true
+python execute_wotan_gls.py --TIC 307210830 --experiment_name validated_cands_test --method gp --kernel squared_exp --kernel_size 1 --bin True --tag 2_qbit_default_bin_true
+
+python execute_wotan_gls.py --TIC 130181866 --experiment_name validated_cands_test --method gp --kernel squared_exp --kernel_size 1 --bin False --tag 0_qbit_default_bin_false
+python execute_wotan_gls.py --TIC 181804752 --experiment_name validated_cands_test --method gp --kernel squared_exp --kernel_size 1 --bin False --tag 1_qbit_default_bin_false
+python execute_wotan_gls.py --TIC 307210830 --experiment_name validated_cands_test --method gp --kernel squared_exp --kernel_size 1 --bin False --tag 2_qbit_default_bin_false
