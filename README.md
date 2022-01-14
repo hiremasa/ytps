@@ -36,7 +36,9 @@
 ---
 <a name="Setup for GLS on a new sector"></a>
 # Setup for GLS on new sector
-This section supposes that it takses TIC number and returns P_max, P_rot, and Light Curve Figures.
+This section supposes that it takses TIC number and returns P_max, P_rot, and Light Curve Figures like below.
+![image](https://user-images.githubusercontent.com/61959411/149486810-c16ff5e7-4c54-4d4a-bff5-8acacc31edcd.png)
+
 1. Firstly, downloading target text file from the (official web site)[https://tess.mit.edu/observations/target-lists/]. Note: You are supposed to be in the ```scr/``` directory. Here is the example of downloading text file of sector 46 for 120 seconds cadence.
 ```
 $ wget -P txt_file https://tess.mit.edu/wp-content/uploads/all_targets_S046_v1.txt
