@@ -1,0 +1,7 @@
+python execute_wotan_gls.py --TIC 257605131 --experiment_name validated_cands_test --method gp --kernel squared_exp --kernel_size 1 --bin False --quality_bitmask hard --log_file test_hard_bitmask --tag 1_qbit_hard_bin_false 
+python execute_wotan_gls.py --TIC 224225541 --experiment_name validated_cands_test --method gp --kernel squared_exp --kernel_size 1 --bin False --quality_bitmask hard --log_file test_hard_bitmask --tag 2_qbit_hard_bin_false 
+python execute_wotan_gls.py --TIC 27491137 --experiment_name validated_cands_test --method gp --kernel squared_exp --kernel_size 1 --bin False --quality_bitmask hard --log_file test_hard_bitmask --tag 3_qbit_hard_bin_false
+
+python execute_wotan_gls.py --TIC 257605131 --experiment_name validated_cands_test --method gp --kernel squared_exp --kernel_size 1 --bin False --quality_bitmask default --log_file test_hard_bitmask --tag 1_qbit_default_bin_false 
+python execute_wotan_gls.py --TIC 224225541 --experiment_name validated_cands_test --method gp --kernel squared_exp --kernel_size 1 --bin False --quality_bitmask default --log_file test_hard_bitmask --tag 2_qbit_default_bin_false 
+python execute_wotan_gls.py --TIC 27491137 --experiment_name validated_cands_test --method gp --kernel squared_exp --kernel_size 1 --bin False --quality_bitmask default --log_file test_hard_bitmask --tag 3_qbit_default_bin_false

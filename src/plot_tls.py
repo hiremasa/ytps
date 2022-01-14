@@ -6,7 +6,6 @@ def get_transit_mask(lc, period, epoch, duration_hours):
     """
     lc : lk.LightCurve
         lightcurve that contains time and flux properties
-
     Another version using numpy arrays only
     ---------------------------------------
     mask = []
@@ -29,11 +28,8 @@ def get_transit_mask(lc, period, epoch, duration_hours):
 
 def plot_tls(lc_clean, flatten_lc, trend_lc, results, args):
     """Plot a figure for TLS pipline
-
     This function returns a figure containing 1. clean lc w/ baseline 2. flatten lc 3. periodgram of transit 4. phase folded lc
-
     ----------
-
     Args:
         lc_clean : 'lightkurve.lightcurve.TessLightCurve' object
                         from preprocessed lk.search_lightcurve(target) func.
@@ -43,9 +39,7 @@ def plot_tls(lc_clean, flatten_lc, trend_lc, results, args):
                         from wotan.flatten() func.
         results : 'transitleastsquares.results.transitleastsquaresresults' object
                         from transitleastsquares.transitleastsquares(time, flatten_lc) func.
-
     ----------
-
     Returns:
         fig : 'matplotlib.figure.Figure' object
     """
@@ -54,18 +48,14 @@ def plot_tls(lc_clean, flatten_lc, trend_lc, results, args):
     assert isinstance(trend_lc, np.ndarray)
     assert isinstance(results, dict)
 
-    if args.bin:
-        time = lc_clean.time.value[::2]
-        flux = lc_clean.time.value[::2]
-    else:
-        time = lc_clean.time.value
-        flux = lc_clean.flux.value
+    time = lc_clean.time.value
+    flux = lc_clean.flux.value
 
     fig, axes = plt.subplots(2, 2, figsize=(10, 10), tight_layout=True, facecolor="whitesmoke")
     if args.method == "gp":
-        fig.suptitle(f"TOI {args.TOI}, TIC {lc_clean.TICID} (sector {args.sector_number})\nMethod {args.method}, {args.kernel} kernel", fontsize=30)
+        fig.suptitle(f"TOI {args.TOI}, TIC {args.TIC} (sector {args.sector_number})\nMethod {args.method}, {args.kernel} kernel", fontsize=30)
     else:
-        fig.suptitle(f"TOI {args.TOI}, TIC {lc_clean.TICID} (sector {args.sector_number})\nMethod {args.method}", fontsize=30) # have to update TOI & sector args
+        fig.suptitle(f"TOI {args.TOI}, TIC {args.TIC} (sector {args.sector_number})\nMethod {args.method}", fontsize=30) # have to update TOI & sector args
     axes = axes.flatten()
 
     # 1. clean lc w/ baseline
