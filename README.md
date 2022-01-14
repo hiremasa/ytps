@@ -34,6 +34,24 @@
 ### 8/30-9/17: make a pipeline to run scripts on all TOIs
 
 ---
+<a name="Setup for GLS on a new sector"></a>
+# Setup for GLS on new sector
+1. Firstly, downloading target text file from the (official web site)[https://tess.mit.edu/observations/target-lists/]. Note: You are supposed to be in the ```scr/``` directory. Here is the example of downloading text file of sector 46 for 120 seconds cadence.
+```
+$ wget -P txt_file https://tess.mit.edu/wp-content/uploads/all_targets_S046_v1.txt
+```
+
+2. Secondly, make batch file for executing python GLS script on new TIC targets. Please run ```txt_file/mkbf.sh```. This example is for sector 46. Fix ```xxx.txt``` and sector number respectively if neccesary. (mkbf.sh)[https://github.com/hiremasa/B4_research/blob/main/src/txt_file/mkbf.sh]
+```
+$ ./txt_file/mkbf.sh
+```
+
+3. Finaly, call batch file. Befere you run the below script, you may need to fix error to delete top 6 lines that says ```--TIC #```.
+``` 
+$ cat txt_file/sector46.batch | parallel
+```
+
+---
 <a name="references"></a>
 # References
 
