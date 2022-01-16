@@ -1,0 +1,28 @@
+language: python
+python:
+  - 2.7
+  - 3.6
+# Enable 3.7 without globally enabling sudo and dist: xenial for other build jobs
+matrix:
+  include:
+    - python: 3.7
+      dist: xenial
+      sudo: true
+install:
+  - pip install scipy  # only needed for tests
+script:
+  - python setup.py install  # includes its dependencies
+  - cd transitleastsquares/tests
+  - python test_cleaned_array.py
+  - python test_duration_grid.py
+  - python test_FAP.py
+  - python test_period_grid.py
+  - python test_resample.py
+  - python test_catalog_data.py
+  - python test_validation.py
+  - python test_synthetic.py
+  - python test_transit_depth_min.py
+  - python test_stats_gap.py
+  - python test_uncertainties.py
+  - python test_shapes.py
+  - python test_multi_planet.py 
