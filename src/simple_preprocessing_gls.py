@@ -119,6 +119,11 @@ if __name__ == "__main__":
         all_df = pd.concat(ss, axis=1)
         all_df.to_csv(f"../output/{args.experiment_name}/all_df.csv")
 
+        df_all = pd.read_csv(f"../output/{args.experiment_name}/all_df.csv", index_col=0)
+        df_all = df_all.transpose()
+        all_df_sort_pmax = df_all.sort_values("pmax", ascending=False)
+        all_df_sort_pmax.to_csv(f"../output/{args.experiment_name}/all_df_sort_pmax.csv")
+
     else:
         try:
             #load lc
