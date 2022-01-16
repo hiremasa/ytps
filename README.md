@@ -1,5 +1,5 @@
 # B4_research
-- [Directory](#directory)
+<!-- - [Directory](#directory)
 - [Tasks](#tasks)
 - [References](#references)
 - [Paper List](#paper_list)
@@ -31,11 +31,11 @@
 # Tasks
 ### 7/5: Lightkurve tutorial by making Line Curve of "TOI-519" & "55 Cancri"
 ### 7/12, 20: exoplanet tutorial
-### 8/30-9/17: make a pipeline to run scripts on all TOIs
+### 8/30-9/17: make a pipeline to run scripts on all TOIs -->
 
 ---
 <a name="Setup for GLS on a new sector"></a>
-# Setup for GLS on new sector
+# Setup for executeing GLS on new sector
 This section supposes that it takses TIC number and returns P_max, P_rot, and Light Curve Figures like below.
 ![image](https://user-images.githubusercontent.com/61959411/149486810-c16ff5e7-4c54-4d4a-bff5-8acacc31edcd.png)
 
@@ -54,6 +54,15 @@ $ ./txt_file/mkbf.sh
 $ cat txt_file/sector46.batch | parallel
 ```
 After this, a lot of images and dataframes will be produced. Please check them in ```./output/sector45/```.
+
+4. Finaly, concatenate all the produced dataframes and sort by Pmax.
+```
+$ python simple_preprocessing_gls.py --collect True  --experiment_name sector45
+```
+
+<a name="SSetup for Wotan Flatteing & TLS search on new sector"></a>
+# Setup for Wotan Flatteing & TLS search on new sector
+
 
 ---
 <a name="references"></a>
