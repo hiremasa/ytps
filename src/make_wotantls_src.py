@@ -11,7 +11,7 @@ parser.add_argument('--sector_number', type=int, default=None, help='the number 
 args = parser.parse_args()
 
 if __name__ == '__main__':
-    all_sorted_df = pd.read_csv('../output/{args.experiment_name}/all_df_sort_pmax.csv', index_col=0)
+    all_sorted_df = pd.read_csv(f'../output/{args.experiment_name}/all_df_sort_pmax.csv', index_col=0)
     select_df = all_sorted_df[(args.upper_thresh >= all_sorted_df['pmax']) &  (all_sorted_df['pmax'] >= args.lower_thresh)]
     for idx, (tic_id, row) in enumerate(select_df.iterrows()):
         tic_number = tic_id.split('_')[0].split('TIC')[1]
