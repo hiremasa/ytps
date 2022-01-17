@@ -70,7 +70,9 @@ After runing the below command, you will get transit images like below in ```./o
 ```
 $ python make_wotantls_src.py --upper_thresh 1.0 --lower_thresh 0.9 --experiment_name sector45 --sector_number 45 | bash
 ```
+
 Note: If you want to run on another sector, please change ```--experiment_name```, ```--sector_number``` values respectively.
+
 ---
 <a name="references"></a>
 # References
