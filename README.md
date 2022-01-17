@@ -37,7 +37,8 @@
 <a name="Setup for GLS on a new sector"></a>
 # Setup for executeing GLS on new sector
 This section supposes that it takses TIC number and returns P_max, P_rot, and Light Curve Figures like below.
-![image](https://user-images.githubusercontent.com/61959411/149486810-c16ff5e7-4c54-4d4a-bff5-8acacc31edcd.png)
+<img src="https://user-images.githubusercontent.com/61959411/149486810-c16ff5e7-4c54-4d4a-bff5-8acacc31edcd.png" width="700px">
+
 
 1. Firstly, download target text file from the [official web site](https://tess.mit.edu/observations/target-lists/). Note: You are supposed to be in the ```scr/``` directory. Here is the example of downloading text file of sector 44 with 120 seconds cadence.
 ```
@@ -62,8 +63,13 @@ $ python simple_preprocessing_gls.py --collect True  --experiment_name sector45
 
 <a name="SSetup for Wotan Flatteing & TLS search on new sector"></a>
 # Setup for Wotan Flatteing & TLS search on new sector
+After runing the below command, you will get transit images like below in ```./output/sector45/tls_images``` direvtory in this example.
 
+<img src="https://user-images.githubusercontent.com/61959411/149708121-08d4a241-45ae-4f98-8e27-f2730127de84.png" width="700px">
 
+```
+$ python make_wotantls_src.py --upper_thresh 1.0 --lower_thresh 0.9 --experiment_name sector45 --sector_number 45 | bash
+```
 ---
 <a name="references"></a>
 # References
