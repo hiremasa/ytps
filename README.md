@@ -63,13 +63,14 @@ $ python simple_preprocessing_gls.py --collect True  --experiment_name sector45
 
 <a name="SSetup for Wotan Flatteing & TLS search on new sector"></a>
 # 2. Setup for Wotan Flatteing & TLS search on new sector
-After runing the below command, you will get transit images like below in ```./output/sector45/tls_images``` direvtory in this example.
+After runing the below command, you will get transit images like below in ```./output/sector45/tls_images``` directory in this example.
 
 <img src="https://user-images.githubusercontent.com/61959411/149708121-08d4a241-45ae-4f98-8e27-f2730127de84.png" width="700px">
 
 ```
 $ python make_wotantls_src.py --upper_thresh 1.0 --lower_thresh 0.9 --experiment_name sector45 --sector_number 45 | bash
 ```
+Note: If you want to run on another sector, please change ```--experiment_name```, ```--sector_number``` values respectively.
 ---
 <a name="references"></a>
 # References
