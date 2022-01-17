@@ -35,7 +35,7 @@
 
 ---
 <a name="Setup for GLS on a new sector"></a>
-# Setup for executeing GLS on new sector
+# 1. Setup for executeing GLS on new sector
 This section supposes that it takses TIC number and returns P_max, P_rot, and Light Curve Figures like below.
 <img src="https://user-images.githubusercontent.com/61959411/149486810-c16ff5e7-4c54-4d4a-bff5-8acacc31edcd.png" width="700px">
 
@@ -62,7 +62,7 @@ $ python simple_preprocessing_gls.py --collect True  --experiment_name sector45
 ```
 
 <a name="SSetup for Wotan Flatteing & TLS search on new sector"></a>
-# Setup for Wotan Flatteing & TLS search on new sector
+# 2. Setup for Wotan Flatteing & TLS search on new sector
 After runing the below command, you will get transit images like below in ```./output/sector45/tls_images``` direvtory in this example.
 
 <img src="https://user-images.githubusercontent.com/61959411/149708121-08d4a241-45ae-4f98-8e27-f2730127de84.png" width="700px">
