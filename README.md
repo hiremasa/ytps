@@ -40,17 +40,18 @@ This section supposes that it takses TIC number and returns P_max, P_rot, and Li
 <img src="https://user-images.githubusercontent.com/61959411/149486810-c16ff5e7-4c54-4d4a-bff5-8acacc31edcd.png" width="700px">
 
 
-1. Firstly, download target text file from the [official web site](https://tess.mit.edu/observations/target-lists/). Note: You are supposed to be in the ```scr/``` directory. Here is the example of downloading text file of sector 44 with 120 seconds cadence.
+1. Firstly, download target text file from the [official web site](https://tess.mit.edu/observations/target-lists/). Note: You are supposed to be in the ```scr/``` directory. Here is the example of downloading text file of sector 45 with 120 seconds cadence.
 ```
+$ cd ./src/
 $ wget -P txt_file https://tess.mit.edu/wp-content/uploads/all_targets_S045_v1.txt
 ```
 
-2. Secondly, make batch file for executing python GLS script on new TIC targets. Please run ```txt_file/mkbf.sh```. This example is for sector 46. Fix ```xxx.txt``` and sector number respectively if neccesary. [mkbf.sh](https://github.com/hiremasa/B4_research/blob/main/src/txt_file/mkbf.sh)
+2. Secondly, make batch file for executing python GLS script on new TIC targets. Please run ```txt_file/mkbf.sh```. This example is for sector 45. Fix ```xxx.txt``` and sector number respectively if neccesary. [mkbf.sh](https://github.com/hiremasa/B4_research/blob/main/src/txt_file/mkbf.sh)
 ```
 $ ./txt_file/mkbf.sh
 ```
 
-3. Finaly, call batch file that executes python scripts. Befere you run the below script, you may need to fix error to delete top 6 lines that say ```--TIC #```.
+3. Thirdly, call batch file that executes python scripts. Befere you run the below script, you may need to fix error to delete top 6 lines that say ```--TIC #```.
 ``` 
 $ cat txt_file/sector46.batch | parallel
 ```
