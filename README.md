@@ -34,6 +34,26 @@
 ### 8/30-9/17: make a pipeline to run scripts on all TOIs -->
 
 ---
+<a name="Setup Environment"></a>
+# 0. Setup Environment
+1. Create a environment for this repo, by running the following at the terminal:
+```
+$ conda create --name Your_Favorite_Environment_Name
+```
+2. Now activate the environment with:
+```
+$ conda activate Your_Favorite_Environment_Name python=3 jupyter 
+```
+3. Then install packeges:
+```
+$ pip install requirements.txt
+```
+4. Finaly, get the neccesary file:
+```
+$ cd ./src
+$ python get_tois.py
+```
+
 <a name="Setup for GLS on a new sector"></a>
 # 1. Setup for executeing GLS on new sector
 This section supposes that it takses TIC number and returns P_max, P_rot, and Light Curve Figures like below.
@@ -46,14 +66,14 @@ $ cd ./src/
 $ wget -P txt_file https://tess.mit.edu/wp-content/uploads/all_targets_S045_v1.txt
 ```
 
-2. Secondly, make batch file for executing python GLS script on new TIC targets. Please run ```txt_file/mkbf.sh```. This example is for sector 45. Fix ```xxx.txt``` and sector number respectively if neccesary. [mkbf.sh](https://github.com/hiremasa/B4_research/blob/main/src/txt_file/mkbf.sh)
+2. Secondly, make batch file for executing python GLS script on new TIC targets. Please run ```txt_file/mkbf.sh```. This example is for sector 45. Fix ```xxx.txt``` and sector number respectively if neccesary, see [mkbf.sh](https://github.com/hiremasa/B4_research/blob/main/src/txt_file/mkbf.sh).
 ```
 $ ./txt_file/mkbf.sh
 ```
 
 3. Thirdly, call batch file that executes python scripts. Befere you run the below script, you may need to fix error to delete top 6 lines that say ```--TIC #```.
 ``` 
-$ cat txt_file/sector46.batch | parallel
+$ cat txt_file/sector45.batch | parallel
 ```
 After this, a lot of images and dataframes will be produced. Please check them in ```./output/sector45/```.
 
