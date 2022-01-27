@@ -15,14 +15,14 @@ import argparse
 from glob import glob
 
 import lightkurve as lk
-from wotan import flatten
 from transitleastsquares import transitleastsquares, catalog_info
 import h5py
 import deepdish
 
 from plot_tls import get_transit_mask, plot_tls
 sys.path.append("../wotan/wotan")
-from wotan import flatten
+sys.path.append(os.path.dirname(__file__) + '/../wotan')
+from wotan import *
 parser = argparse.ArgumentParser(description='Download lc, then preprocess, applying wotan and TLS')
 parser.add_argument('--TOI', type=int, default=None, help='TOI (default: None)')
 parser.add_argument('--TIC', type=int, default=None, help='TIC (default: None)')
@@ -36,7 +36,7 @@ parser.add_argument('--sector_number', type=int, default=None, help='the number 
 parser.add_argument('--method', type=str, default='biweight', help='the method for wotan.flatten(default: biweight)')
 parser.add_argument('--window_length', type=float, default=0.3, help='the value for the arguent of wotan.flatten')
 parser.add_argument('--kernel', type=str, default='squared_exp', help='select one kernel(e.g squared_exp, matern)')
-parser.add_argument('--kernel_size', type=int, default=1, help='select kernel size')
+parser.add_argument('--kernel_size', type=float, default=1.0, help='select kernel size')
 parser.add_argument('--period_min', type=float, default=0.5, help='min Minimum trial period (in units of days). If none is given, the limit is derived from the Roche limit')
 parser.add_argument('--tag', type=str, default=None, help='tag for output file name')
 parser.add_argument('--log_file', type=str, default=None, help='log file name')
@@ -55,7 +55,8 @@ if not os.path.exists(f"../output/{args.experiment_name}"):
 if not os.path.exists(f'../output/{args.experiment_name}/tls_images'):
     os.makedirs(f'../output/{args.experiment_name}/tls_images')
     os.makedirs(f'../output/{args.experiment_name}/tls_hdf5') 
-    
+
+
 if __name__ == "__main__":
     t0 = t.time()
     print("==================================================")
@@ -77,7 +78,7 @@ if __name__ == "__main__":
             raise ValueError("Warning: No Light Curves found")
 
         lc = lc_item.download(quality_bitmask=args.quality_bitmask)
-        lc_clean = lc.normalize().remove_nans().remove_outliers(sigma_lower=args.sigma_lower, sigma_upper=args.sigma_upper).bin(time_bin_size=0.005)
+        lc_clean = lc.remove_nans().normalize().remove_outliers(sigma_lower=args.sigma_lower, sigma_upper=args.sigma_upper).bin(time_bin_size=0.005)
 
         args.sector_number = lc.sector
         sector = str(lc.sector).zfill(2)
