@@ -15,6 +15,6 @@ if __name__ == '__main__':
     select_df = all_sorted_df[(args.upper_thresh >= all_sorted_df['pmax']) &  (all_sorted_df['pmax'] >= args.lower_thresh)]
     for idx, (tic_id, row) in enumerate(select_df.iterrows()):
         tic_number = tic_id.split('_')[0].split('TIC')[1]
-        print(f'python execute_wotan_tls.py --TIC {tic_number} --sector_number {args.sector_number} --experiment_name {args.experiment_name} --method gp --kernel squared_exp --kernel_size 1 --tag {idx + 1}')
+        print(f'python execute_wotan_tls.py --TIC {tic_number} --sector_number {args.sector_number} --experiment_name {args.experiment_name} --method gp --kernel squared_exp --kernel_size 2 --tag {idx + 1}')
 
 
