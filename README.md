@@ -1,4 +1,4 @@
-# B4_research
+# Overall TESS Pipeline to Search for Transiting Planets in Young Stars
 <!-- - [Directory](#directory)
 - [Tasks](#tasks)
 - [References](#references)
