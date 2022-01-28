@@ -1,4 +1,4 @@
-# Overall TESS Pipeline to Search for Planets in Young Stars
+# Overall TESS Pipeline to Search for Transiting Planets in Young Stars
 <!-- - [Directory](#directory)
 - [Tasks](#tasks)
 - [References](#references)
