@@ -1,5 +1,6 @@
 """
 This script takes TIC ID or TOI ID, then executes GLS(generalized lomb scargle and returns result figures and csv files.
+If args.collect=True, this code summarize all outputs from TIC results within the same sector into 1 dataframe.
 """
 import os
 import numpy as np
@@ -29,8 +30,8 @@ parser.add_argument('--TOI', type=int, default=None, help='TOI (default: None)')
 parser.add_argument('--TIC', type=int, default=None, help='TIC (default: None)')
 parser.add_argument('--author', type=str, default="SPOC", help='author (default: "SPOC")')
 parser.add_argument('--exptime', type=int, default=120, help='exposure time')
-parser.add_argument('--sigma_lower', type=int, default=2, help='sigma_lower for remove outliers (default: 3)')
-parser.add_argument('--sigma_upper', type=int, default=2, help='sigma_upper for remove outliers (default: 3)')
+parser.add_argument('--sigma_lower', type=int, default=3, help='sigma_lower for remove outliers (default: 3)')
+parser.add_argument('--sigma_upper', type=int, default=3, help='sigma_upper for remove outliers (default: 3)')
 parser.add_argument('--Pbeg', type=float, default=0.1, help='minimumn P(period) value (default: 0.1)')
 parser.add_argument('--Pend', type=float, default=10, help='maximumn P(period) value (default: 10)')
 parser.add_argument('--verbose', action="store_true", default=False, help='verbose (default: False)')
@@ -141,15 +142,14 @@ if __name__ == "__main__":
                 name = f"TOI{str(args.TOI).zfill(4)}"
             else:
                 name = target_star.replace(" ", "")
-            print(args.TIC)
-            print(args.TOI)
+
             if args.TOI is None and args.TIC is not None:
                 try:
                     df_tois = pd.read_csv("dataframe/TOIs.csv")
                     args.TOI = math.floor(df_tois[df_tois["TIC ID"]==args.TIC]["TOI"].unique()[0])
                 except:
                     pass
-            print(args.TOI)
+
             #search lc 
             if args.verbose:
                 print(f"***Searching for {target_star}")
