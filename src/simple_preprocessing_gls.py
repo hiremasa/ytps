@@ -1,40 +1,41 @@
+"""
+This script takes TIC ID or TOI ID, then executes GLS(generalized lomb scargle and returns result figures and csv files.
+"""
 import os
 import numpy as np
 import pandas as pd
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt  
-
+import math
 import gc
 import sys
-#sys.path.append('../GLS/python/')
-
-import lightkurve as lk
-from astropy.timeseries import LombScargle
-import astropy.units as u
-from gls import Gls
-import argparse
-from glob import glob
-
 import warnings
 warnings.simplefilter('ignore')
 from tqdm import tqdm
+
+import lightkurve as lk
+import astropy.units as u
+import argparse
+from glob import glob
+from gls import Gls
+
 
 parser = argparse.ArgumentParser(description='Output Fig & CSV file from one star by\
                     Simple Preprocessing and GLS')
 parser.add_argument('--target_star', type=str, default="TOI 540", help='the name of target star (default: "TOI540")')
 parser.add_argument('--NAME', type=str, default=None, help='name of the target (default: None)')
-parser.add_argument('--TOI', type=str, default=None, help='TOI (default: None)')
-parser.add_argument('--TIC', type=str, default=None, help='TIC (default: None)')
+parser.add_argument('--TOI', type=int, default=None, help='TOI (default: None)')
+parser.add_argument('--TIC', type=int, default=None, help='TIC (default: None)')
 parser.add_argument('--author', type=str, default="SPOC", help='author (default: "SPOC")')
 parser.add_argument('--exptime', type=int, default=120, help='exposure time')
-parser.add_argument('--sigma_lower', type=int, default=20, help='sigma_lower for remove outliers (default: 20)')
-parser.add_argument('--sigma_upper', type=int, default=10, help='sigma_upper for remove outliers (default: 10)')
+parser.add_argument('--sigma_lower', type=int, default=2, help='sigma_lower for remove outliers (default: 3)')
+parser.add_argument('--sigma_upper', type=int, default=2, help='sigma_upper for remove outliers (default: 3)')
 parser.add_argument('--Pbeg', type=float, default=0.1, help='minimumn P(period) value (default: 0.1)')
 parser.add_argument('--Pend', type=float, default=10, help='maximumn P(period) value (default: 10)')
 parser.add_argument('--verbose', action="store_true", default=False, help='verbose (default: False)')
 parser.add_argument('--collect', type=bool, default=False, help='collect all outputs (default: False)')
-parser.add_argument('--sector_all', type=bool, default=True, help='select lc from all sectors or only one sector (default: True)')
+parser.add_argument('--sector_all', type=bool, default=False, help='select lc from all sectors or only one sector (default: True)')
 parser.add_argument('--experiment_name', type=str, default=None, help='folder under output dir according to the experiment')
 parser.add_argument('--sector_number', type=int, default=None, help='the number of sector')
 args = parser.parse_args()
@@ -44,9 +45,9 @@ if not os.path.exists(f"../output/{args.experiment_name}"):
     os.makedirs(f"../output/{args.experiment_name}/images")
     os.makedirs(f"../output/{args.experiment_name}/dataframes")
 
-def plot_4figures(name, lc, lc_clean, gls, preds):
+def plot_4figures(args, lc, lc_clean, gls, preds):
     fig, axes = plt.subplots(2, 2, figsize=(10, 10), tight_layout=True, facecolor="whitesmoke")
-    fig.suptitle(f"{name}, TIC {lc.TICID}, sector {lc.SECTOR}", fontsize=30)
+    fig.suptitle(f"TOI {args.TOI}, TIC {lc.TICID}, sector {lc.SECTOR}", fontsize=30)
     axes = axes.flatten()
 
     #plot raw flux
@@ -94,7 +95,7 @@ def plot_4figures(name, lc, lc_clean, gls, preds):
     return fig
 
 
-def Excecut_GLS(lc_clean):
+def Execute_GLS(lc_clean):
     df = [lc_clean.time.value, lc_clean.flux.value, lc_clean.flux_err.value]
     if args.verbose:
         print("Running GLS")
@@ -126,7 +127,7 @@ if __name__ == "__main__":
 
     else:
         try:
-            #load lc
+            #set up for arguments
             if args.NAME is not None:
                 target_star = args.NAME
             elif args.TOI is not None:
@@ -135,13 +136,24 @@ if __name__ == "__main__":
                 target_star = f"TIC {args.TIC}"
             else:
                  target_star = args.target_star
-            if args.verbose:
-                print(f"***Searching for {target_star}")
-            lc_file = lk.search_lightcurve(target_star, author=args.author, exptime=args.exptime, sector=args.sector_number)
+
             if args.TOI is not None:
                 name = f"TOI{str(args.TOI).zfill(4)}"
             else:
                 name = target_star.replace(" ", "")
+            print(args.TIC)
+            print(args.TOI)
+            if args.TOI is None and args.TIC is not None:
+                try:
+                    df_tois = pd.read_csv("dataframe/TOIs.csv")
+                    args.TOI = math.floor(df_tois[df_tois["TIC ID"]==args.TIC]["TOI"].unique()[0])
+                except:
+                    pass
+            print(args.TOI)
+            #search lc 
+            if args.verbose:
+                print(f"***Searching for {target_star}")
+            lc_file = lk.search_lightcurve(target_star, author=args.author, exptime=args.exptime, sector=args.sector_number)
             if not lc_file:
                 raise ValueError("Warning: No Light Curves found")
 
@@ -151,10 +163,11 @@ if __name__ == "__main__":
                     lc = lc_item.download()
                     lc_clean = lc.normalize().remove_nans().remove_outliers(sigma_lower=args.sigma_lower, sigma_upper=args.sigma_upper)
                     print(f"Successfully downloaded the Light Curve of {name}")
-                    gls, preds = Excecut_GLS(lc_clean=lc_clean)
+                    gls, preds = Execute_GLS(lc_clean=lc_clean)
+                    print('GLS has done')
 
                     #save the results
-                    fig = plot_4figures(name, lc, lc_clean, gls, preds)
+                    fig = plot_4figures(args, lc, lc_clean, gls, preds)
                     sector = str(lc.sector).zfill(2)
                     fig.savefig(f"../output/{args.experiment_name}/images/{name}_SECTOR{sector}.png".replace(" ", ""))
                     plt.close()
@@ -165,10 +178,11 @@ if __name__ == "__main__":
                 lc_clean = lc.normalize().remove_nans().remove_outliers(sigma_lower=args.sigma_lower, sigma_upper=args.sigma_upper)
                 print(f"Successfully downloaded the Light Curve of {name}")
 
-                gls, preds = Excecut_GLS(lc_clean=lc_clean)
+                gls, preds = Execute_GLS(lc_clean=lc_clean)
+                print('GLS has done;')
 
                 #save the results
-                fig = plot_4figures(name, lc, lc_clean, gls, preds)
+                fig = plot_4figures(args, lc, lc_clean, gls, preds)
                 sector = str(lc.sector).zfill(2)
                 fig.savefig(f"../output/{args.experiment_name}/images/{name}_SECTOR{sector}.png")
                 plt.close()
