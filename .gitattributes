@@ -1,5 +1,4 @@
-*.ipynb linguist-detectable=false
-*.csv linguist-detectable=false
-*.txt linguist-detectable=false
-*.py linguist-language=Python
-*.sh linguist-language=shell
+* linguist-vendored
+*.py linguist-vendored=false
+*.sh linguist-vendored=false
+
