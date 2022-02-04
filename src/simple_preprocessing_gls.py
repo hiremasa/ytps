@@ -32,7 +32,7 @@ parser.add_argument('--author', type=str, default="SPOC", help='author (default:
 parser.add_argument('--exptime', type=int, default=120, help='exposure time')
 parser.add_argument('--sigma_lower', type=int, default=3, help='sigma_lower for remove outliers (default: 3)')
 parser.add_argument('--sigma_upper', type=int, default=3, help='sigma_upper for remove outliers (default: 3)')
-parser.add_argument('--Pbeg', type=float, default=0.1, help='minimumn P(period) value (default: 0.1)')
+parser.add_argument('--Pbeg', type=float, default=0.01, help='minimumn P(period) value (default: 0.1)')
 parser.add_argument('--Pend', type=float, default=10, help='maximumn P(period) value (default: 10)')
 parser.add_argument('--verbose', action="store_true", default=False, help='verbose (default: False)')
 parser.add_argument('--collect', type=bool, default=False, help='collect all outputs (default: False)')
