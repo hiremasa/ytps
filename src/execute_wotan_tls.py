@@ -20,7 +20,6 @@ import h5py
 import deepdish
 
 from plot_tls import get_transit_mask, plot_tls
-sys.path.append("../wotan/wotan")
 sys.path.append(os.path.dirname(__file__) + '/../wotan')
 from wotan import *
 parser = argparse.ArgumentParser(description='Download lc, then preprocess, applying wotan and TLS')
@@ -28,8 +27,8 @@ parser.add_argument('--TOI', type=int, default=None, help='TOI (default: None)')
 parser.add_argument('--TIC', type=int, default=None, help='TIC (default: None)')
 parser.add_argument('--author', type=str, default="SPOC", help='author (default: "SPOC")')
 parser.add_argument('--exptime', type=int, default=120, help='exposure time')
-parser.add_argument('--sigma_lower', type=int, default=3, help='sigma_lower for remove outliers (default:3)')
-parser.add_argument('--sigma_upper', type=int, default=3, help='sigma_upper for remove outliers (default:3)')
+parser.add_argument('--sigma_lower', type=int, default=5, help='sigma_lower for remove outliers (default:5)')
+parser.add_argument('--sigma_upper', type=int, default=5, help='sigma_upper for remove outliers (default:5)')
 parser.add_argument('--verbose', action="store_true", default=False, help='verbose (default: False)')
 parser.add_argument('--experiment_name', type=str, default=None, help='folder under output dir according to the experiment')
 parser.add_argument('--sector_number', type=int, default=None, help='the number of sector')
@@ -41,11 +40,8 @@ parser.add_argument('--period_min', type=float, default=0.5, help='min Minimum t
 parser.add_argument('--tag', type=str, default=None, help='tag for output file name')
 parser.add_argument('--log_file', type=str, default=None, help='log file name')
 parser.add_argument('--quality_bitmask', type=str, default='default', help='Bitmask that should be used to ignore bad-quality cadences.(“none”, “default”, “hard”, “hardest”, or int)')
-#parser.add_argument('--bin', type=bool, default=False, help='bin the flux series or not')
 args = parser.parse_args()
 
-assert os.getcwd() == '/home/kobayashi/project/B4_research/src', \
-                'cwd is incorrect(expected: /home/kobayashi/project/B4_research/src/)'
                 
 if not os.path.exists(f"../output/{args.experiment_name}"):
     #raise ValueError('No existing experiment, set proper experiment_name')
@@ -78,7 +74,9 @@ if __name__ == "__main__":
             raise ValueError("Warning: No Light Curves found")
 
         lc = lc_item.download(quality_bitmask=args.quality_bitmask)
-        lc_clean = lc.remove_nans().normalize().remove_outliers(sigma_lower=args.sigma_lower, sigma_upper=args.sigma_upper).bin(time_bin_size=0.005)
+        lc_clean = lc.remove_nans().normalize().remove_outliers(sigma_lower=args.sigma_lower, sigma_upper=args.sigma_upper)
+        if args.method == 'gp':
+            lc_clean = lc_clean.bin(time_bin_size=0.005)
 
         args.sector_number = lc.sector
         sector = str(lc.sector).zfill(2)

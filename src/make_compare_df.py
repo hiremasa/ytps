@@ -2,8 +2,6 @@ import os
 import sys
 import pandas as pd
 import argparse
-assert os.getcwd() == '/home/kobayashi/project/B4_research/src', \
-        'cwd is incorrect(expected: /home/kobayashi/project/B4_research/src/)'
 parser = argparse.ArgumentParser(description='summarize all dataframes into all_df.csv')
 parser.add_argument('--experiment_name', type=str, default=None, help='folder name under .output/ according to the experiment')
 args = parser.parse_args()
