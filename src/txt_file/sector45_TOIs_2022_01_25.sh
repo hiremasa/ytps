@@ -1,0 +1,14 @@
+python execute_wotan_tls.py --sector_number 45 --experiment_name sector45 --method gp --kernel squared_exp --kernel_size 2.0 --tag 1 --sigma_lower 3 --sigma_upper 3 --TIC 380619414
+python execute_wotan_tls.py --sector_number 45 --experiment_name sector45 --method gp --kernel squared_exp --kernel_size 2.0 --tag 1 --sigma_lower 3 --sigma_upper 3 --TIC 281837575
+python execute_wotan_tls.py --sector_number 45 --experiment_name sector45 --method gp --kernel squared_exp --kernel_size 2.0 --tag 1 --sigma_lower 3 --sigma_upper 3 --TIC 95361530 
+python execute_wotan_tls.py --sector_number 45 --experiment_name sector45 --method gp --kernel squared_exp --kernel_size 2.0 --tag 1 --sigma_lower 3 --sigma_upper 3 --TIC 173103335 
+python execute_wotan_tls.py --sector_number 45 --experiment_name sector45 --method gp --kernel squared_exp --kernel_size 2.0 --tag 1 --sigma_lower 3 --sigma_upper 3 --TIC 281885301 
+python execute_wotan_tls.py --sector_number 45 --experiment_name sector45 --method gp --kernel squared_exp --kernel_size 2.0 --tag 1 --sigma_lower 3 --sigma_upper 3 --TIC 281837575
+python execute_wotan_tls.py --sector_number 45 --experiment_name sector45 --method gp --kernel squared_exp --kernel_size 2.0 --tag 1 --sigma_lower 3 --sigma_upper 3 --TIC 175193677
+python execute_wotan_tls.py --sector_number 45 --experiment_name sector45 --method gp --kernel squared_exp --kernel_size 2.0 --tag 1 --sigma_lower 3 --sigma_upper 3 --TIC 393495970
+python execute_wotan_tls.py --sector_number 45 --experiment_name sector45 --method gp --kernel squared_exp --kernel_size 2.0 --tag 1 --sigma_lower 3 --sigma_upper 3 --TIC 350020859
+python execute_wotan_tls.py --sector_number 45 --experiment_name sector45 --method gp --kernel squared_exp --kernel_size 2.0 --tag 1 --sigma_lower 3 --sigma_upper 3 --TIC 95337971
+python execute_wotan_tls.py --sector_number 45 --experiment_name sector45 --method gp --kernel squared_exp --kernel_size 2.0 --tag 1 --sigma_lower 3 --sigma_upper 3 --TIC 38087018
+python execute_wotan_tls.py --sector_number 45 --experiment_name sector45 --method gp --kernel squared_exp --kernel_size 2.0 --tag 1 --sigma_lower 3 --sigma_upper 3 --TIC 350043412
+python execute_wotan_tls.py --sector_number 45 --experiment_name sector45 --method gp --kernel squared_exp --kernel_size 2.0 --tag 1 --sigma_lower 3 --sigma_upper 3 --TIC 406495245
+python execute_wotan_tls.py --sector_number 45 --experiment_name sector45 --method gp --kernel squared_exp --kernel_size 2.0 --tag 1 --sigma_lower 3 --sigma_upper 3 --TIC 149496868

@@ -1,0 +1,15 @@
+python simple_preprocessing_gls.py --TIC 166527623 --experiment_name validated_candidates --verbose --exptime 600
+python simple_preprocessing_gls.py --TIC 441420236 --experiment_name validated_candidates --verbose --exptime 600
+python simple_preprocessing_gls.py --TIC 460205581 --experiment_name validated_candidates --verbose --exptime 600
+python simple_preprocessing_gls.py --TIC 410214986 --experiment_name validated_candidates --verbose --exptime 600
+python simple_preprocessing_gls.py --TIC 146520535 --experiment_name validated_candidates --verbose --exptime 600
+python simple_preprocessing_gls.py --TIC 257605131 --experiment_name validated_candidates --verbose --exptime 600
+python simple_preprocessing_gls.py --TIC 180695581 --experiment_name validated_candidates --verbose --exptime 600
+python simple_preprocessing_gls.py --TIC 224225541 --experiment_name validated_candidates --verbose --exptime 600
+python simple_preprocessing_gls.py --TIC 27491137 --experiment_name validated_candidates --verbose --exptime 600
+python simple_preprocessing_gls.py --TIC 383390264 --experiment_name validated_candidates --verbose --exptime 600
+python simple_preprocessing_gls.py --TIC 375506058 --experiment_name validated_candidates --verbose --exptime 600
+python simple_preprocessing_gls.py --TIC 130181866 --experiment_name validated_candidates --verbose --exptime 600
+python simple_preprocessing_gls.py --TIC 181804752 --experiment_name validated_candidates --verbose --exptime 600
+python simple_preprocessing_gls.py --TIC 307210830 --experiment_name validated_candidates --verbose --exptime 600
+python simple_preprocessing_gls.py --TIC 233602827 --experiment_name validated_candidates --verbose --exptime 600

@@ -89,3 +89,4 @@ def get_tois(
 
 if __name__=='__main__':
     tois = get_tois()
+    tois.to_csv('./dataframe/TOIs.csv')

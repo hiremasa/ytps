@@ -1,0 +1,16 @@
+#This batch file run TLS pipeline on validated candidates.
+python execute_wotan_tls.py --TIC 166527623 --window_length 0.3 --experiment_name validated_candidates --method hspline --tag 1
+python execute_wotan_tls.py --TIC 441420236 --window_length 0.3 --experiment_name validated_candidates --method hspline --tag 2
+python execute_wotan_tls.py --TIC 460205581 --window_length 0.3 --experiment_name validated_candidates --method hspline --tag 3
+python execute_wotan_tls.py --TIC 410214986 --window_length 0.3 --experiment_name validated_candidates --method hspline --tag 4
+python execute_wotan_tls.py --TIC 146520535 --window_length 0.3 --experiment_name validated_candidates --method hspline --tag 5
+python execute_wotan_tls.py --TIC 257605131 --window_length 0.3 --experiment_name validated_candidates --method hspline --tag 6
+python execute_wotan_tls.py --TIC 180695581 --window_length 0.3 --experiment_name validated_candidates --method hspline --tag 7
+python execute_wotan_tls.py --TIC 224225541 --window_length 0.3 --experiment_name validated_candidates --method hspline --tag 8
+python execute_wotan_tls.py --TIC 27491137 --window_length 0.3 --experiment_name validated_candidates --method hspline --tag 9
+python execute_wotan_tls.py --TIC 383390264 --window_length 0.3 --experiment_name validated_candidates --method hspline --tag 10
+python execute_wotan_tls.py --TIC 375506058 --window_length 0.3 --experiment_name validated_candidates --method hspline --tag 11
+python execute_wotan_tls.py --TIC 130181866 --window_length 0.3 --experiment_name validated_candidates --method hspline --tag 12
+python execute_wotan_tls.py --TIC 181804752 --window_length 0.3 --experiment_name validated_candidates --method hspline --tag 13
+python execute_wotan_tls.py --TIC 307210830 --window_length 0.3 --experiment_name validated_candidates --method hspline --tag 14
+python execute_wotan_tls.py --TIC 233602827 --window_length 0.3 --experiment_name validated_candidates --method hspline --tag 15
