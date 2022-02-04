@@ -1,4 +1,8 @@
+# Young Transiting Planers Survey
 # Overall TESS Pipeline to Search for Transiting Planets in Young Stars
+[![GitHub issues](https://img.shields.io/github/issues/hiremasa/ytps)](https://github.com/hiremasa/ytps/issues)
+[![GitHub license](https://img.shields.io/github/license/hiremasa/ytps)](https://github.com/hiremasa/ytps)
+![GitHub Pipenv locked Python version](https://img.shields.io/github/pipenv/locked/python-version/metabolize/rq-dashboard-on-heroku)
 <!-- - [Directory](#directory)
 - [Tasks](#tasks)
 - [References](#references)
