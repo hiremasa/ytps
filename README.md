@@ -1,7 +1,7 @@
 # YTPS(Young Transiting Planets Survey)
 # Overall TESS Pipeline to Search for Transiting Planets in Young Stars
-## This is the repogitory to search young active stars from [TESS](https://tess.mit.edu/) light curve files & search trnasiting exoplanet candidates.
-This project consits 2 parts: 1. search for young active stars (GLS pipeline) 2. search transiting signals (TLS pipeline)
+## This is the repogitory to search for young active stars from [TESS](https://tess.mit.edu/) light curve files & search for trnasiting exoplanet candidates.
+This project consits of 2 parts: 1. search for young active stars (GLS pipeline) 2. search transiting signals (TLS pipeline)
 
 
 [![GitHub issues](https://img.shields.io/github/issues/hiremasa/ytps)](https://github.com/hiremasa/ytps/issues)
@@ -43,7 +43,7 @@ This project consits 2 parts: 1. search for young active stars (GLS pipeline) 2.
 
 ---
 <a name="Setup Environment"></a>
-# 0. Setup Environment
+# 0. Environment Setup
 1. Create an environment for this repo, by running the following at the terminal:
 ```
 $ conda create --name Your_Favorite_Environment_Name
@@ -63,14 +63,15 @@ $ python get_tois.py
 ```
 
 <a name="Basic Usage"></a>
-# 1.1 Basic Usage for search young active stars
+# Basic Usage
+## 1.1 Basic Usage to search for young active stars
 Running the below command(TIC ID is 123456789 in this example), you will get GLS results as image & csv format. You can check them in ```./output/sector0/images/``` &  ```./output/sector0/dataframes/``` respectively. Pmax from 0.5 to 0.9 is preferred value for young planets.
 ```
 $ python simple_preprocessing_gls.py --TIC 123456789 --sector 0 --experiment_name sector0 --verbose
 ```
 <img src="https://user-images.githubusercontent.com/61959411/152975807-ae9db51d-e7a2-4841-8265-a3d952b271c1.png" width="700px">
 
-# 1.2 Basic Usage for search transit signals
+## 1.2 Basic Usage to search for transit signals
 Running the below command(TIC ID is 123456789 in this example), you will get TLS(Transit Least Squares) results as image & HDF5 format. You can check them in ```./output/sector0/tls_images/``` &  ```./output/sector0/tls_hdf5/``` respectively. 
 
 Here is GP method:
@@ -84,7 +85,8 @@ $ python execute_wotan_gls.py --TIC 123456789 --sector 0 --experiment_name secto
 <img src="https://user-images.githubusercontent.com/61959411/149708121-08d4a241-45ae-4f98-8e27-f2730127de84.png" width="700px">
 
 <a name="Practice for GLS on a new sector"></a>
-# 2.1 Practice for executeing GLS on new sector
+# 2. Practice for new sector
+## 2.1 Practice for executeing GLS on new sector
 This section supposes that it takses TIC number and returns P_max, P_rot, and Light Curve Figures like below.
 
 1. Firstly, download target text file from the [official web site](https://tess.mit.edu/observations/target-lists/). Note: You are supposed to be in the ```scr/``` directory. Here is the example of downloading text file of sector 45 with 120 seconds cadence.
@@ -109,8 +111,8 @@ After this, a lot of images and dataframes will be produced. Please check them i
 $ python simple_preprocessing_gls.py --collect True  --experiment_name sector45
 ```
 
-<a name="SSetup for Wotan Flatteing & TLS search on new sector"></a>
-# 2.2 Practice for Wotan Flatteing & TLS search on new sector
+<a name="Practice for Wotan Flatteing & TLS search on new sector"></a>
+## 2.2 Practice for Wotan Flatteing & TLS search on new sector
 After runing the below command, you will get transit images like below in ```./output/sector45/tls_images``` directory in this example.
 
 ```
