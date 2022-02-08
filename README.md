@@ -44,7 +44,7 @@ This project consits 2 parts: 1. search for young active stars (GLS pipeline) 2.
 ---
 <a name="Setup Environment"></a>
 # 0. Setup Environment
-1. Create a environment for this repo, by running the following at the terminal:
+1. Create an environment for this repo, by running the following at the terminal:
 ```
 $ conda create --name Your_Favorite_Environment_Name
 ```
@@ -56,7 +56,7 @@ $ conda activate Your_Favorite_Environment_Name python=3 jupyter
 ```
 $ pip install requirements.txt
 ```
-4. Finaly, get the neccesary file:
+4. Finaly, get the neccesary file(Important):
 ```
 $ cd ./src
 $ python get_tois.py
@@ -143,3 +143,10 @@ Note: If you want to run on another sector, please change ```--experiment_name``
 - [Optimized transit detection algorithm to search forperiodic transits of small planets](https://arxiv.org/pdf/1901.02015.pdf)
 - [60 VALIDATED PLANETS FROMK2CAMPAIGNS 5–8](https://arxiv.org/pdf/1810.04074.pdf)
 - [TESS DISCOVERY OF A TRANSITING SUPER-EARTH IN THEπMENSAE SYSTEM](https://arxiv.org/pdf/1809.05967.pdf)
+- [A 38 Million Year Old Neptune-Sized Planet in the Kepler Field](https://arxiv.org/pdf/2112.14776.pdf)
+- [The Early Evolution of Stars and ExoplanetSystems: Exploring and Exploiting Nearby,Young Stars](https://surveygizmoresponseuploads.s3.amazonaws.com/fileuploads/623127/4458621/198-9e85837dc24da47f3e7d9b53c4734218_KastnerJoelH.pdf)
+- [Understanding Exoplanet Atmospheres withUV Observations I: NUV and Blue/Optical](http://surveygizmoresponseuploads.s3.amazonaws.com/fileuploads/623127/4458621/250-06161a4e8722fa4ad92563b30046b976_exoplanet_uv_white_paper.pdf)
+- [The TESS Objects of Interest Catalog from the TESS Prime Mission](https://arxiv.org/pdf/2103.12538.pdf)
+- [Cluster Difference Imaging Photometric Survey. II. TOI 837: A Young Validated Planet in IC 2602](https://arxiv.org/pdf/2009.07845.pdf)
+- [Zodiacal Exoplanets in Time (ZEIT) V: A Uniform Search for Transiting Planets in Young Clusters Observed by K2
+](https://arxiv.org/abs/1709.09670)
