@@ -1,7 +1,9 @@
 # YTPS(Young Transiting Planets Survey)
 # Overall TESS Pipeline to Search for Transiting Planets in Young Stars
 ## This is the repogitory to search for young active stars from [TESS](https://tess.mit.edu/) light curve files & search for trnasiting exoplanet candidates.
-This project consits of 2 parts: 1. search for young active stars (GLS pipeline) 2. search transiting signals (TLS pipeline)
+This project consits of 2 parts: 
+1. search for young active stars (GLS pipeline) 
+2. search transiting signals (TLS pipeline)
 
 
 [![GitHub issues](https://img.shields.io/github/issues/hiremasa/ytps)](https://github.com/hiremasa/ytps/issues)
