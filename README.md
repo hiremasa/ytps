@@ -67,7 +67,7 @@ $ python get_tois.py
 <a name="Basic Usage"></a>
 # Basic Usage
 ## 1.1 Basic Usage to search for young active stars
-Running the below command(TIC ID is 123456789 in this example), you will get GLS results as image & csv format. You can check them in ```./output/sector0/images/``` &  ```./output/sector0/dataframes/``` respectively. Pmax from 0.5 to 0.9 is preferred value for young planets.
+Running the below command(TIC ID is 123456789 in this example), you will get GLS results as image & csv format. You can check them in ```./output/sector0/images/``` &  ```./output/sector0/dataframes/``` respectively. Strictly, Pmax from 0.5 to 0.9 is preferred value for young planets. Not strictly, Pmax from 0.05 to 0.9 is preferred value for young planets.
 ```
 $ python simple_preprocessing_gls.py --TIC 123456789 --sector_number 0 --experiment_name sector0 --verbose
 ```
