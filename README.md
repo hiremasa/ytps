@@ -69,7 +69,7 @@ $ python get_tois.py
 ## 1.1 Basic Usage to search for young active stars
 Running the below command(TIC ID is 123456789 in this example), you will get GLS results as image & csv format. You can check them in ```./output/sector0/images/``` &  ```./output/sector0/dataframes/``` respectively. Pmax from 0.5 to 0.9 is preferred value for young planets.
 ```
-$ python simple_preprocessing_gls.py --TIC 123456789 --sector 0 --experiment_name sector0 --verbose
+$ python simple_preprocessing_gls.py --TIC 123456789 --sector_number 0 --experiment_name sector0 --verbose
 ```
 <img src="https://user-images.githubusercontent.com/61959411/152975807-ae9db51d-e7a2-4841-8265-a3d952b271c1.png" width="700px">
 
