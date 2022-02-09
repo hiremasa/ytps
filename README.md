@@ -1,5 +1,5 @@
 # YTPS(Young Transiting Planets Survey)
-# Overall TESS Pipeline to Search for Transiting Planets in Young Stars
+# A New TESS Pipeline to Search for Transiting Planets in Young Stars
 ## This is the repository to search for young active stars from [TESS](https://tess.mit.edu/) light curve files & search for transiting exoplanet candidates.
 This project consits of 2 parts: 
 1. search for young active stars (GLS pipeline) 
@@ -67,9 +67,9 @@ $ python get_tois.py
 <a name="Basic Usage"></a>
 # Basic Usage
 ## 1.1 Basic Usage to search for young active stars
-Running the below command(TIC ID is 123456789 in this example), you will get GLS results as image & csv format. You can check them in ```./output/sector0/images/``` &  ```./output/sector0/dataframes/``` respectively. Pmax from 0.5 to 0.9 is preferred value for young planets.
+Running the below command(TIC ID is 123456789 in this example), you will get GLS results as image & csv format. You can check them in ```./output/sector0/images/``` &  ```./output/sector0/dataframes/``` respectively. Strictly, Pmax from 0.5 to 0.9 is preferred value for young planets. Not strictly, Pmax from 0.05 to 0.9 is preferred value for young planets.
 ```
-$ python simple_preprocessing_gls.py --TIC 123456789 --sector 0 --experiment_name sector0 --verbose
+$ python simple_preprocessing_gls.py --TIC 123456789 --sector_number 0 --experiment_name sector0 --verbose
 ```
 <img src="https://user-images.githubusercontent.com/61959411/152975807-ae9db51d-e7a2-4841-8265-a3d952b271c1.png" width="700px">
 
@@ -78,11 +78,11 @@ Running the below command(TIC ID is 123456789 in this example), you will get TLS
 
 Here is GP method:
 ```
-$ python execute_wotan_gls.py --TIC 123456789 --sector 0 --experiment_name sector0 --method gp --kernel squared_exp --kernel_size 2.0
+$ python execute_wotan_gls.py --TIC 123456789 --sector_number 0 --experiment_name sector0 --method gp --kernel squared_exp --kernel_size 2.0
 ```
 Here is window based method:
 ```
-$ python execute_wotan_gls.py --TIC 123456789 --sector 0 --experiment_name sector0 --method biweight --window_lenght 0.3
+$ python execute_wotan_gls.py --TIC 123456789 --sector_number 0 --experiment_name sector0 --method biweight --window_lenght 0.3
 ```
 <img src="https://user-images.githubusercontent.com/61959411/149708121-08d4a241-45ae-4f98-8e27-f2730127de84.png" width="700px">
 
