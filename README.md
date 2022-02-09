@@ -78,11 +78,11 @@ Running the below command(TIC ID is 123456789 in this example), you will get TLS
 
 Here is GP method:
 ```
-$ python execute_wotan_gls.py --TIC 123456789 --sector 0 --experiment_name sector0 --method gp --kernel squared_exp --kernel_size 2.0
+$ python execute_wotan_gls.py --TIC 123456789 --sector_number 0 --experiment_name sector0 --method gp --kernel squared_exp --kernel_size 2.0
 ```
 Here is window based method:
 ```
-$ python execute_wotan_gls.py --TIC 123456789 --sector 0 --experiment_name sector0 --method biweight --window_lenght 0.3
+$ python execute_wotan_gls.py --TIC 123456789 --sector_number 0 --experiment_name sector0 --method biweight --window_lenght 0.3
 ```
 <img src="https://user-images.githubusercontent.com/61959411/149708121-08d4a241-45ae-4f98-8e27-f2730127de84.png" width="700px">
 
