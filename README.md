@@ -56,7 +56,7 @@ $ conda activate Your_Favorite_Environment_Name python=3 jupyter
 ```
 3. Then install packeges:
 ```
-$ pip install requirements.txt
+$ conda install requirements.txt
 ```
 4. Finaly, get the neccesary file(Important):
 ```
