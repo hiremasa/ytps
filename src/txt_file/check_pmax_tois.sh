@@ -1,0 +1,1 @@
+cat  dataframe/TOIs.csv | awk -F "," '{printf("%d\n",$2)}' | while read toi; do echo python simple_preprocessing_gls.py --TOI $toi --verbose --experiment_name TOI_Pmax; done > txt_file/toi_pmax_check.batch
