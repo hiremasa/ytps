@@ -46,19 +46,19 @@ This project consits of 2 parts:
 ---
 <a name="Setup Environment"></a>
 # 0. Environment Setup
-1. Create an environment for this repo, by running the following at the terminal:
+1. Create an environment for this repo, by running the following at the terminal (if neccesary):
 ```
 $ conda create --name Your_Favorite_Environment_Name
 ```
-2. Now activate the environment with:
+2. Now activate the environment with (if neccesary):
 ```
 $ conda activate Your_Favorite_Environment_Name python=3 jupyter 
 ```
-3. Then install packeges:
+3. Install packeges:
 ```
-$ conda install requirements.txt
+$ pip install requirements.txt
 ```
-4. Finaly, get the neccesary file(Important):
+4. Finaly, get the neccesary file (**Important**):
 ```
 $ cd ./src
 $ python get_tois.py
